@@ -4,16 +4,20 @@
 **Author(s)**: Robin Frischmann   
 **License**: MIT License (http://opensource.org/licenses/mit-license.php)
 -----------------------------------
+
+**WARNING**    
+**Still in development & not useable**   
+-------------
     
-perfectfont is an easy-to-use fast forward in-app overlayer window that helps you to find the best fonts / typography for your webpage.
-It's based on my own font-selector-core and currently works fine with google web fonts.   
+**perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
+It's based on my own font-selector-core and currently works fine with **google web fonts**.   
 
 ## Abilities ##
 * get all used fonts incl. font detail
 * realtime font-testing with a set of fonts (currently only google web fonts support)
 * realtime testing of font details (e.g. size, weight, decoration, transform)
 
-## Coming soon ## 
+## Coming soon ##
 * save the outcome directly within your projects (old font settings will be set into comment tags to leave a reset possibility)
 * set of standard fonts, custom fonts / load local fonts
 
@@ -29,10 +33,6 @@ It's based on my own font-selector-core and currently works fine with google web
 
 Coming Soon
 
------------------------------------------------------------
-
-# **Examples** #
-     
 --------------------------------------
 
 More fonts / features are coming soon...  
