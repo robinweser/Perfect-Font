@@ -255,6 +255,19 @@ PerfectFont.prototype.updatePosition = function (x, y) {
     this.dom.style.left = x;
     this.dom.style.top = y;
 }
+PerfectFont.prototype.maximize = function () {
+    var maximized = this.getConfig("maximized");
+    if (maximized) {
+        this.updateWidth(400);
+        this.updateHeight(400);
+        this.updatePosition(200, 200);
+    } else {
+        this.updateWidth(window.innerWidth);
+        this.updateHeight(window.innerHeight);
+        this.updatePosition(0, 0)
+    }
+    this.updateConfig("maximized", !maximized);
+}
 PerfectFont.prototype.show = function () {
     this.dom.style.display = "block";
     if (!this.fontList.style.height) {
