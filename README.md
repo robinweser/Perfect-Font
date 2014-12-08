@@ -37,7 +37,7 @@ fontWindow.show()
 
 ### Configuration ###
 ```javascript
-{    
+config = {    
     draggable: true,
     maximized: false,
     docked: false,
@@ -50,7 +50,7 @@ fontWindow.show()
 fontWindow.addAvailableFont("Arial");
 fontWindow.addAvailableFont("Lato");
 fontWindow.addAvailableFont("Helvetica");
-fontWindow.addAvailableFont("Comic Sans");
+fontWindow.addAvailableFont("Impact");
 ```
 
 ### Window Settings ###
@@ -64,6 +64,5 @@ fontWindow.maximize();
 
 ## Contact Me ##
 
-More fonts / features are coming soon...  
 Feel free to contact me ([robin@rofrischmann.de](mailto:robin@rofrischmann.de)).
  
