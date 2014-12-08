@@ -6,8 +6,7 @@
 
 **perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
 
-
-<img src="http://i61.tinypic.com/2mcxcp3.png" alt="preview" style="width: 200px"/>
+<img src="http://i60.tinypic.com/e6q4o5.png" alt="preview"/>
 ## Abilities ##
 * lists all fonts used on a webpage
 * realtime testing of different fonts and font details e.g. size, weight, word-spacing, letter-spacing, color
