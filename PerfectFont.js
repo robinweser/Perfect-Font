@@ -1,20 +1,25 @@
-/*===========================================================================
-
-   calculateMe.js is kind of an extension to the JavaScript build-in Math-Library.
-   Check https://bitbucket.org/Grindelwald/calculateme.js for more information
-
-   Current Version: 0.0.1
-                    September 15 2014
-
-   Author(s): Robin Frischmann
-   License: MIT License
-            http://opensource.org/licenses/mit-license.php
-
-   If you modify this code please add your name and what was modified to this
-   header, as well as the date modified.
-
- ===========================================================================*/
-
+/******************************************************************************************
+#
+#       Copyright 2014 Robin Frischmann
+#
+#       Licensed under the Apache License, Version 2.0 (the "License");
+#       you may not use this file except in compliance with the License.
+#       You may obtain a copy of the License at
+#
+#         http://www.apache.org/licenses/LICENSE-2.0
+#
+#       Unless required by applicable law or agreed to in writing, software
+#       distributed under the License is distributed on an "AS IS" BASIS,
+#       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#       See the License for the specific language governing permissions and
+#       limitations under the License.
+#
+#       Projectname...................: perfectfont
+#
+#       Developer/Date................: Robin Frischmann, 08.12.2014
+#       Version/Release...............: 1.0
+#
+******************************************************************************************/
 
 // -- CONFIGURATION -- //
 var defaults = {
