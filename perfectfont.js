@@ -214,6 +214,33 @@ PerfectFont.prototype.updateUsedFontDetails = function (clickedElement) {
     var selectedUsedFont = this.getSelectedUsedFont();
     selectedUsedFont.updateFontDetails(clickedElement.id.replace("perfectfont-preference-", ""), clickedElement.value);
 }
+PerfectFont.prototype.showUsedFontPreferences = function (clickedElement, usedFont) {
+    if (document.getElementsByClassName("perfectfont-active").length > 0) {
+        document.getElementsByClassName("perfectfont-active")[0].classList.remove("perfectfont-active");
+    }
+    clickedElement.classList.add("perfectfont-active");
+    var preId = "perfectfont-preference-";
+    if (usedFont.fontDetails.fontWeight == "normal") {
+        usedFont.fontDetails.fontWeight = 400;
+    }
+    document.getElementById(preId + "fontSize").value = parseFloat(usedFont.fontDetails.fontSize);
+    document.getElementById(preId + "fontWeight").value = usedFont.fontDetails.fontWeight;
+    document.getElementById(preId + "letterSpacing").value = parseFloat(usedFont.fontDetails.letterSpacing);
+    document.getElementById(preId + "wordSpacing").value = parseFloat(usedFont.fontDetails.wordSpacing);
+    document.getElementById(preId + "color").value = usedFont.fontDetails.color;
+}
+PerfectFont.prototype.setConfig = function (config) {
+    this.config = config;
+}
+PerfectFont.prototype.getConfig = function (preference) {
+    if (preference) {
+        return this.config[preference];
+    }
+    return this.config;
+}
+PerfectFont.prototype.updateConfig = function (preference, value) {
+    this.config[preference] = value;
+}
 PerfectFont.prototype.show = function () {
     this.dom.style.display = "block";
     if (!this.fontList.style.height) {
