@@ -70,12 +70,57 @@ PerfectFont.prototype.initWindow = function () {
     this.header.classList.add("perfectfont-header");
     this.fontList.classList.add("perfectfont-fontlist");
     this.fontDetail.classList.add("perfectfont-fontdetail");
+    this.preference.classList.add("perfectfont-preference");
+    this.preferenceValue.classList.add("perfectfont-preferenceValue");
+    this.fontDetail.appendChild(this.preference);
+    this.fontDetail.appendChild(this.preferenceValue);
     this.dom.appendChild(this.header);
     this.dom.appendChild(this.fontList);
     this.dom.appendChild(this.fontDetail);
 
     this.header.innerHTML = 'Choose Font';
     document.body.appendChild(this.dom);
+    this.initPreferenceView();
+}
+PerfectFont.prototype.initPreferenceView = function () {
+    var preferences = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', "Color"];
+    for (var i = 0; i < preferences.length; ++i) {
+        var tempListItem = document.createElement("li");
+        tempListItem.innerHTML = preferences[i];
+        tempListItem.classList.add("perfectfont");
+        this.preference.appendChild(tempListItem);
+    };
+
+    var types = ["number", "number", "number", "number", "color"];
+    var ids = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "color"];
+    for (var i = 0; i < types.length; ++i) {
+        var tempInputItem = document.createElement("input");
+        tempInputItem.classList.add("perfectfont");
+        tempInputItem.id = "perfectfont-preference-" + ids[i];
+        tempInputItem.type = types[i];
+        tempInputItem.onchange = function () {
+            currentPerfectFont.updateUsedFontDetails(this)
+        };
+        if (types[i] == "number") {
+            if (i == 1) {
+                tempInputItem.min = "100";
+                tempInputItem.max = "900";
+                tempInputItem.step = "100";
+            } else {
+                tempInputItem.min = "0"
+            }
+        }
+        this.preferenceValue.appendChild(tempInputItem);
+    }
+    this.availableFonts = document.createElement("select");
+    this.availableFonts.classList.add("perfectfont-availableFonts");
+    this.availableFonts.size = "5";
+    this.availableFonts.onchange = function () {
+        currentPerfectFont.updateUsedFont(this)
+    };
+    this.fontDetail.appendChild(this.availableFonts);
+
+    this.initFonts();
 }
 PerfectFont.prototype.initFonts = function () {
     this.initUsedFonts();
