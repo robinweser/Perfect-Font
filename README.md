@@ -1,32 +1,70 @@
 
-**Current Version**: 0.0.1 *(November 21 2014)*   
+# perfectfont #
+**Current Version**: 1.0 *(Dezember 08 2014)*   
 **Author(s)**: Robin Frischmann   
-**License**: MIT License (http://opensource.org/licenses/mit-license.php)
+**License**: Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 
-**Still in development & not useable**   
-    
 **perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
-It's based on my own font-selector-core and currently works fine with **google web fonts**.   
 
+
+<img src="http://i61.tinypic.com/2mcxcp3.png" alt="preview" style="width: 200px"/>
 ## Abilities ##
-* get all used fonts incl. font detail
-* realtime font-testing with a set of fonts (currently only google web fonts support)
-* realtime testing of font details (e.g. size, weight, decoration, transform)
+* lists all fonts used on a webpage
+* realtime testing of different fonts and font details e.g. size, weight, word-spacing, letter-spacing, color
+* draggable window with dock, maximize and transparency functionality
     
 ## Browser Support ##
-* Chrome
+* Chrome (tested with latest version)
 * Safari
-* Opera     
 
 ## Coming soon ##
-* save the outcome directly within your projects (old font settings will be set into comment tags to leave a reset possibility)
-* set of standard fonts, custom fonts / load local fonts
-* Support for Firefox and Internet Explorer
+* export the outcome as a CSS-file (with old fonts in comments above)
+* google font support 
+* form to add custom fonts (drag & drop as well)
+* style, decoration, transform testing (bold, italic, uppercase, lowercase, underline, ...)
+* support for Firefox and Internet Explorer
 
 ## How to use ##
-Coming Soon
+Download the latest version ([https://github.com/rofrischmann/perfectfont/releases/download/v1.0/perfectfont_1.0.zip](Here (Version 1.0)).
+I recommend using Chrome because it got a nice color picker to go with. 
+```html
+<script type="text/javascript" src="perfectfont.min.js"></script>
+<link type="text/css" href="perfectfont.min.css" rel="stylesheet">
+``` 
+   
+```javascript
+var fontWindow = new PerfectFont(config);      //Don't need to pass a config
+fontWindow.show()
+```
 
-##Contact Me##
+### Configuration ###
+```javascript
+{    
+    draggable: true,
+    maximized: false,
+    docked: false,
+    transparent: false
+}
+```
+
+### Adding new fonts ###
+```javascript
+fontWindow.addAvailableFont("Arial");
+fontWindow.addAvailableFont("Lato");
+fontWindow.addAvailableFont("Helvetica");
+fontWindow.addAvailableFont("Comic Sans");
+```
+
+### Window Settings ###
+```javascript
+fontWindow.toggleTransparency();
+fontWindow.dockLeft();
+fontWindow.dockRight();
+fontWindow.dockTop();
+fontWindow.maximize();
+```
+
+## Contact Me ##
 
 More fonts / features are coming soon...  
 Feel free to contact me ([robin@rofrischmann.de](mailto:robin@rofrischmann.de)).
