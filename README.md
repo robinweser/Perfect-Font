@@ -23,7 +23,7 @@
 * support for Firefox and Internet Explorer
 
 ## How to use ##
-Download the latest version ([https://github.com/rofrischmann/perfectfont/releases/download/v1.0/perfectfont_1.0.zip](Here (Version 1.0)).
+Download the latest version [https://github.com/rofrischmann/perfectfont/releases/download/v1.0/perfectfont_1.0.zip](Here (Version 1.0).   
 I recommend using Chrome because it got a nice color picker to go with. 
 ```html
 <script type="text/javascript" src="perfectfont.min.js"></script>
