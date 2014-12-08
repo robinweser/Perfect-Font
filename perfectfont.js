@@ -326,6 +326,15 @@ PerfectFont.prototype.dockRight = function () {
     this.resizeHeight(window.innerHeight);
     this.resizeWidth(400);
 }
+PerfectFont.prototype.toggleTransparency = function () {
+    var transparent = this.getConfig("transparent");
+    if (transparent) {
+        this.dom.style.opacity = 1.0;
+    } else {
+        this.dom.style.opacity = 0.5;
+    }
+    this.updateConfig("transparent", !transparent);
+}
 PerfectFont.prototype.show = function () {
     this.dom.style.display = "block";
     if (!this.fontList.style.height) {
