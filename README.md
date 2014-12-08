@@ -1,13 +1,9 @@
-# perfectfont #
------------------------------------ 
+
 **Current Version**: 0.0.1 *(November 21 2014)*   
 **Author(s)**: Robin Frischmann   
 **License**: MIT License (http://opensource.org/licenses/mit-license.php)
------------------------------------
 
-**WARNING**    
 **Still in development & not useable**   
--------------
     
 **perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
 It's based on my own font-selector-core and currently works fine with **google web fonts**.   
@@ -27,12 +23,11 @@ It's based on my own font-selector-core and currently works fine with **google w
 * set of standard fonts, custom fonts / load local fonts
 * Support for Firefox and Internet Explorer
 
------------------------------------
-# **How to use** #
-
+## How to use ##
 Coming Soon
 
---------------------------------------
+##Contact Me##
 
 More fonts / features are coming soon...  
 Feel free to contact me ([robin@rofrischmann.de](mailto:robin@rofrischmann.de)).
+ 
