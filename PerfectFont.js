@@ -45,15 +45,10 @@ var PerfectFont = function (config) {
 
 // *** INFO & CREDITS *** //
 PerfectFont.prototype.info = {
-    name: "perfectfont.js",
-    version: "1.0.0",
-    build: "11.11.2014",
-    author: "Robin Frischmann",
-    copyright: "Copyright " + String.fromCharCode(169) + " 2014 Robin Frischmann - MIT licenese",
-    //TODO: REPO, DESCRIPTION, LICENSE
-    repository: "https://bitbucket.org/rofrischmann",
-    description: "calculateMe.js is a small but powerful set of extensions for the build-in JavaScript Math-Library.",
-    license: "MIT license (http://opensource.org/licenses/mit-license.php)"
+    name: "perfectfont",
+    version: "1.0",
+    build: "08.12.2014",
+    author: "Robin Frischmann"
 }
 
 PerfectFont.prototype.init = function (config) {
