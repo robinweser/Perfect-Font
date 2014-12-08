@@ -241,6 +241,20 @@ PerfectFont.prototype.getConfig = function (preference) {
 PerfectFont.prototype.updateConfig = function (preference, value) {
     this.config[preference] = value;
 }
+PerfectFont.prototype.updateHeight = function (newHeight) {
+    this.dom.style.height = newHeight;
+    var newInnerHeight = newHeight - this.header.offsetHeight;
+    this.fontList.style.height = (newInnerHeight - 1);
+    this.fontDetail.style.height = (newInnerHeight - 2);
+    document.getElementById("perfectfont-preference-color").style.height = document.getElementById("perfectfont-preference-fontSize").offsetHeight;
+}
+PerfectFont.prototype.updateWidth = function (newWidth) {
+    this.dom.style.width = newWidth;
+}
+PerfectFont.prototype.updatePosition = function (x, y) {
+    this.dom.style.left = x;
+    this.dom.style.top = y;
+}
 PerfectFont.prototype.show = function () {
     this.dom.style.display = "block";
     if (!this.fontList.style.height) {
