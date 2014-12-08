@@ -241,14 +241,14 @@ PerfectFont.prototype.getConfig = function (preference) {
 PerfectFont.prototype.updateConfig = function (preference, value) {
     this.config[preference] = value;
 }
-PerfectFont.prototype.updateHeight = function (newHeight) {
+PerfectFont.prototype.resizeHeight = function (newHeight) {
     this.dom.style.height = newHeight;
     var newInnerHeight = newHeight - this.header.offsetHeight;
     this.fontList.style.height = (newInnerHeight - 1);
     this.fontDetail.style.height = (newInnerHeight - 2);
     document.getElementById("perfectfont-preference-color").style.height = document.getElementById("perfectfont-preference-fontSize").offsetHeight;
 }
-PerfectFont.prototype.updateWidth = function (newWidth) {
+PerfectFont.prototype.resizeWidth = function (newWidth) {
     this.dom.style.width = newWidth;
 }
 PerfectFont.prototype.updatePosition = function (x, y) {
@@ -258,12 +258,12 @@ PerfectFont.prototype.updatePosition = function (x, y) {
 PerfectFont.prototype.maximize = function () {
     var maximized = this.getConfig("maximized");
     if (maximized) {
-        this.updateWidth(400);
-        this.updateHeight(400);
+        this.resizeWidth(400);
+        this.resizeHeight(400);
         this.updatePosition(200, 200);
     } else {
-        this.updateWidth(window.innerWidth);
-        this.updateHeight(window.innerHeight);
+        this.resizeWidth(window.innerWidth);
+        this.resizeHeight(window.innerHeight);
         this.updatePosition(0, 0)
     }
     this.updateConfig("maximized", !maximized);
@@ -271,8 +271,8 @@ PerfectFont.prototype.maximize = function () {
 PerfectFont.prototype.dock = function (orientation) {
     var docked = this.getConfig("docked");
     if (docked) {
-        this.updateWidth(400);
-        this.updateHeight(400);
+        this.resizeWidth(400);
+        this.resizeHeight(400);
         this.updatePosition(200, 200);
     } else {
         switch (orientation) {
@@ -294,23 +294,23 @@ PerfectFont.prototype.dock = function (orientation) {
 }
 PerfectFont.prototype.dockLeft = function () {
     this.updatePosition(0, 0);
-    this.updateHeight(window.innerHeight);
-    this.updateWidth(400);
+    this.resizeHeight(window.innerHeight);
+    this.resizeWidth(400);
 }
 PerfectFont.prototype.dockTop = function () {
     this.updatePosition(0, 0);
-    this.updateHeight(400);
-    this.updateWidth(window.innerWidth);
+    this.resizeHeight(400);
+    this.resizeWidth(window.innerWidth);
 }
 PerfectFont.prototype.dockRight = function () {
     this.updatePosition(window.innerWidth - 400, 0);
-    this.updateHeight(window.innerHeight);
-    this.updateWidth(400);
+    this.resizeHeight(window.innerHeight);
+    this.resizeWidth(400);
 }
 PerfectFont.prototype.show = function () {
     this.dom.style.display = "block";
     if (!this.fontList.style.height) {
-        this.updateHeight(this.dom.offsetHeight);
+        this.resizeHeight(this.dom.offsetHeight);
     }
 }
 PerfectFont.prototype.hide = function () {
