@@ -19,16 +19,16 @@
 // -- CONFIGURATION -- //
 var defaults = {
     draggable: true,
-    window: true,
     maximized: false,
     docked: false,
-    transparent: true,
+    transparent: false,
     livePreview: true,
     controlButton: true
 };
-// -- CONFIGURATION -- //
 var currentPerfectFont;
-
+var mouseX, mouseY, lDivX, lDivY;
+var move = false;
+// -- CONFIGURATION -- //
 
 var PerfectFont = function (config) {
     //TODO: config dynamisch ersetzen
@@ -77,7 +77,27 @@ PerfectFont.prototype.initWindow = function () {
     this.dom.appendChild(this.header);
     this.dom.appendChild(this.fontList);
     this.dom.appendChild(this.fontDetail);
-
+    if (this.getConfig("draggable")) {
+        this.header.onmousedown = function (e) {
+            move = true;
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            lDivX = parseInt(Extend.getStyleProperty(currentPerfectFont.dom, "left"));
+            lDivY = parseInt(Extend.getStyleProperty(currentPerfectFont.dom, "top"));
+        }
+        document.body.onmouseup = function (e) {
+            move = false;
+        }
+        document.body.onmousemove = function (e) {
+            if (move) {
+                lDivX += e.clientX - mouseX;
+                lDivY += e.clientY - mouseY;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                currentPerfectFont.updatePosition(lDivX, lDivY);
+            }
+        }
+    }
     this.header.innerHTML = 'Choose Font';
     document.body.appendChild(this.dom);
     this.initPreferenceView();
@@ -206,7 +226,6 @@ PerfectFont.prototype.getSelectedUsedFont = function () {
 PerfectFont.prototype.updateUsedFont = function (clickedElement) {
     var selectedUsedFont = this.getSelectedUsedFont();
     selectedUsedFont.updateFontName(clickedElement.value);
-    debugger;
     document.getElementsByClassName("perfectfont-active")[0].childNodes[0].innerHTML = clickedElement.value;
     document.getElementsByClassName("perfectfont-active")[0].childNodes[0].style.fontFamily = clickedElement.value;
 }
