@@ -268,6 +268,45 @@ PerfectFont.prototype.maximize = function () {
     }
     this.updateConfig("maximized", !maximized);
 }
+PerfectFont.prototype.dock = function (orientation) {
+    var docked = this.getConfig("docked");
+    if (docked) {
+        this.updateWidth(400);
+        this.updateHeight(400);
+        this.updatePosition(200, 200);
+    } else {
+        switch (orientation) {
+        case "left":
+            this.dockLeft();
+            break;
+        case "right":
+            this.dockRight();
+            break;
+        case "top":
+            this.dockTop();
+            break;
+        default:
+            this.dockTop();
+            break;
+        }
+    }
+    this.updateConfig("docked", !docked);
+}
+PerfectFont.prototype.dockLeft = function () {
+    this.updatePosition(0, 0);
+    this.updateHeight(window.innerHeight);
+    this.updateWidth(400);
+}
+PerfectFont.prototype.dockTop = function () {
+    this.updatePosition(0, 0);
+    this.updateHeight(400);
+    this.updateWidth(window.innerWidth);
+}
+PerfectFont.prototype.dockRight = function () {
+    this.updatePosition(window.innerWidth - 400, 0);
+    this.updateHeight(window.innerHeight);
+    this.updateWidth(400);
+}
 PerfectFont.prototype.show = function () {
     this.dom.style.display = "block";
     if (!this.fontList.style.height) {
