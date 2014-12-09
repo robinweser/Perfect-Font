@@ -20,6 +20,7 @@
 ## Coming soon ##
 * export the outcome as a CSS-file (with old fonts in comments above)
 * google font support 
+* test page on github
 * form to add custom fonts (drag & drop as well)
 * style, decoration, transform testing (bold, italic, uppercase, lowercase, underline, ...)
 * support for Firefox and Internet Explorer
