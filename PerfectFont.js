@@ -234,7 +234,6 @@ PerfectFont.prototype.initUsedFonts = function () {
             break;
         }
         var tempFontString = Extend.getStyleProperty(tempItem, "font-family");
-        debugger;
         var alreadyCheckedFontStringsIndex = alreadyCheckedFontStrings.indexOf(tempFontString);
         if (alreadyCheckedFontStringsIndex != -1) {
             this.usedFonts[alreadyCheckedFontStringsIndex].addDomElement(tempItem);
@@ -408,7 +407,7 @@ PerfectFont.prototype.toggleTransparency = function () {
     if (transparent) {
         this.dom.style.setProperty("opacity", 1.0);
     } else {
-        this.dom.style.setProperty("opacity", 0.5);
+        this.dom.style.setProperty("opacity", 0.4);
     }
     this.updateConfig("transparent", !transparent);
 }
