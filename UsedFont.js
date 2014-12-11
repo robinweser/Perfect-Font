@@ -55,7 +55,7 @@ PerfectFont.UsedFont.prototype.getOldFontName = function () {
 PerfectFont.UsedFont.prototype.updateFontName = function (fontName) {
     this.fontName = fontName;
     for (var i = 0; i < this.domElements.length; i++) {
-        this.domElements[i].style["font-family"] = fontName;
+        this.domElements[i].style.setProperty("font-family", fontName);
     }
 }
 PerfectFont.UsedFont.prototype.getFontDetails = function (fontDetail) {
@@ -70,6 +70,9 @@ PerfectFont.UsedFont.prototype.setFontDetails = function (fontDetails) {
 PerfectFont.UsedFont.prototype.updateFontDetails = function (fontDetail, value) {
     this.fontDetails[fontDetail] = value;
     for (var i = 0; i < this.domElements.length; i++) {
+        if (fontDetail == "fontSize" || fontDetail == "letterSpacing" || fontDetail == "wordSpacing") {
+            value += "px";
+        }
         this.domElements[i].style[fontDetail] = value;
     }
 }

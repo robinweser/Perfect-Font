@@ -108,7 +108,7 @@ PerfectFont.prototype.initWindow = function () {
             }
         }
     }
-    this.header.innerHTML = "Choose Font";
+    this.header.innerHTML = "Choose Font ";
     document.body.appendChild(this.dom);
     this.initWindowSettings();
     this.initPreferenceView();
@@ -133,37 +133,40 @@ PerfectFont.prototype.initWindowSettings = function () {
     dockTopButton.className = "perfectfont fa fa-arrow-circle-up";
     dockRightButton.className = "perfectfont fa fa-arrow-circle-right";
 
-    closeButton.style.webkitTransform = "rotate(45deg)";
-    closeButton.style.float = "left";
-    minimizeButton.style.float = "left";
-    maximizeButton.style.float = "left";
-    dockLeftButton.style.float = "right";
-    dockTopButton.style.float = "right";
-    dockRightButton.style.float = "right";
+    var vendors = ["-webkit-", "-moz-", "-ms-", "-khtml", "-o"];
+    vendors.forEach(function (item) {
+        closeButton.style.setProperty(item + "-transform", "rotate(45deg)")
+    })
+    closeButton.style.setProperty("float", "left");
+    minimizeButton.style.setProperty("float", "left");
+    maximizeButton.style.setProperty("float", "left");
+    dockLeftButton.style.setProperty("float", "right");
+    dockTopButton.style.setProperty("float", "right");
+    dockRightButton.style.setProperty("float", "right");
 
-    dockLeftButton.onclick = function () {
+    dockLeftButton.addEventListener("click", function () {
         currentPerfectFont.dock("left");
-    }
-    dockTopButton.onclick = function () {
+    });
+    dockTopButton.addEventListener("click", function () {
         currentPerfectFont.dock("top");
-    }
-    dockRightButton.onclick = function () {
+    })
+    dockRightButton.addEventListener("click", function () {
         currentPerfectFont.dock("right");
-    }
-    toggleTransparencyButton.onclick = function () {
+    })
+    toggleTransparencyButton.addEventListener("click", function () {
         toggleActive(this);
         currentPerfectFont.toggleTransparency();
-    }
-    closeButton.onclick = function () {
+    })
+    closeButton.addEventListener("click", function () {
         currentPerfectFont.close();
-    }
-    minimizeButton.onclick = function () {
+    })
+    minimizeButton.addEventListener("click", function () {
         currentPerfectFont.minimize();
-    }
-    maximizeButton.onclick = function () {
+    })
+    maximizeButton.addEventListener("click", function () {
         toggleActive(this);
         currentPerfectFont.maximize();
-    }
+    })
     this.header.appendChild(closeButton);
     this.header.appendChild(minimizeButton);
     this.header.appendChild(maximizeButton);
@@ -188,9 +191,9 @@ PerfectFont.prototype.initPreferenceView = function () {
         tempInputItem.classList.add("perfectfont");
         tempInputItem.id = "perfectfont-preference-" + ids[i];
         tempInputItem.type = types[i];
-        tempInputItem.onchange = function () {
+        tempInputItem.addEventListener("change", function () {
             currentPerfectFont.updateUsedFontDetails(this)
-        };
+        })
         if (types[i] == "number") {
             if (i == 1) {
                 tempInputItem.min = "100";
@@ -231,6 +234,7 @@ PerfectFont.prototype.initUsedFonts = function () {
             break;
         }
         var tempFontString = Extend.getStyleProperty(tempItem, "font-family");
+        debugger;
         var alreadyCheckedFontStringsIndex = alreadyCheckedFontStrings.indexOf(tempFontString);
         if (alreadyCheckedFontStringsIndex != -1) {
             this.usedFonts[alreadyCheckedFontStringsIndex].addDomElement(tempItem);
@@ -247,7 +251,7 @@ PerfectFont.prototype.initUsedFonts = function () {
             var tempFontDetails = {
                 fontWeight: (Extend.getStyleProperty(tempItem, "font-weight") == "normal" ? 400 : Extend.getStyleProperty(tempItem, "font-weight")),
                 fontSize: Extend.getStyleProperty(tempItem, "font-size"),
-                letterSpacing: (Extend.getStyleProperty(tempItem, "font-weight") == "normal" ? 0 : Extend.getStyleProperty(tempItem, "font-weight")),
+                letterSpacing: (Extend.getStyleProperty(tempItem, "letter-spacing") == "normal" ? 0 : Extend.getStyleProperty(tempItem, "font-weight")),
                 wordSpacing: Extend.getStyleProperty(tempItem, "word-spacing"),
                 color: Extend.getStyleProperty(tempItem, "color"),
                 fontStyle: Extend.getStyleProperty(tempItem, "font-style"),
@@ -276,9 +280,9 @@ PerfectFont.prototype.addFontToFontList = function (usedFont) {
     tempListItem.id = "perfectfont-fontlist-" + usedFont.id;
     tempListItem.innerHTML = '<p style="font-family:' + usedFont.fontName + '">' + usedFont.fontName + '</p><span class="perfectfont">' + usedFont.oldFontName + ' - ' + usedFont.fontDetails.fontSize + '</span>'
     tempListItem.classList.add("perfectfont");
-    tempListItem.onclick = function () {
+    tempListItem.addEventListener("click", function () {
         currentPerfectFont.showUsedFontPreferences(this, usedFont)
-    };
+    })
     this.fontList.appendChild(tempListItem);
     this.fontList.childNodes[0].click();
 }
@@ -297,7 +301,7 @@ PerfectFont.prototype.updateUsedFont = function (clickedElement) {
     var selectedUsedFont = this.getSelectedUsedFont();
     selectedUsedFont.updateFontName(clickedElement.value);
     document.getElementsByClassName("perfectfont-active")[0].childNodes[0].innerHTML = clickedElement.value;
-    document.getElementsByClassName("perfectfont-active")[0].childNodes[0].style.fontFamily = clickedElement.value;
+    document.getElementsByClassName("perfectfont-active")[0].childNodes[0].style.setProperty("font-family", clickedElement.value);
 }
 PerfectFont.prototype.updateUsedFontDetails = function (clickedElement) {
     var selectedUsedFont = this.getSelectedUsedFont();
@@ -331,25 +335,24 @@ PerfectFont.prototype.updateConfig = function (preference, value) {
     this.config[preference] = value;
 }
 PerfectFont.prototype.resizeHeight = function (newHeight) {
-    this.dom.style.height = newHeight;
+    this.dom.style.setProperty("height", newHeight + "px");
     var newInnerHeight = newHeight - this.header.offsetHeight;
-    this.fontList.style.height = (newInnerHeight - 1);
-    this.fontDetail.style.height = (newInnerHeight - 2);
-    document.getElementById("perfectfont-preference-color").style.height = document.getElementById("perfectfont-preference-fontSize").offsetHeight;
+    this.fontList.style.setProperty("height", (newInnerHeight - 1) + "px");
+    this.fontDetail.style.setProperty("height", (newInnerHeight - 2) + "px");
+    document.getElementById("perfectfont-preference-color").style.setProperty("height", document.getElementById("perfectfont-preference-fontSize").offsetHeight + "px");
 }
 PerfectFont.prototype.resizeWidth = function (newWidth) {
-    this.dom.style.width = newWidth;
+    this.dom.style.setProperty("width", newWidth + "px");
 }
 PerfectFont.prototype.updatePosition = function (x, y) {
-    this.dom.style.left = x;
-    this.dom.style.top = y;
+    this.dom.style.setProperty("left", x + "px");
+    this.dom.style.setProperty("top", y + "px");
 }
 PerfectFont.prototype.maximize = function () {
     var maximized = this.getConfig("maximized");
     if (maximized) {
         this.resizeWidth(400);
         this.resizeHeight(400);
-        console.log(lDivX);
         this.updatePosition(lDivX, lDivY);
     } else {
         this.resizeWidth(window.innerWidth);
@@ -387,37 +390,37 @@ PerfectFont.prototype.dock = function (orientation) {
 }
 PerfectFont.prototype.dockLeft = function () {
     this.updatePosition(0, 0);
-    this.resizeHeight(window.innerHeight);
+    this.resizeHeight(window.innerHeight - 1);
     this.resizeWidth(400);
 }
 PerfectFont.prototype.dockTop = function () {
     this.updatePosition(0, 0);
     this.resizeHeight(400);
-    this.resizeWidth(window.innerWidth);
+    this.resizeWidth(window.innerWidth - 1);
 }
 PerfectFont.prototype.dockRight = function () {
     this.updatePosition(window.innerWidth - 400, 0);
-    this.resizeHeight(window.innerHeight);
+    this.resizeHeight(window.innerHeight - 1);
     this.resizeWidth(400);
 }
 PerfectFont.prototype.toggleTransparency = function () {
     var transparent = this.getConfig("transparent");
     if (transparent) {
-        this.dom.style.opacity = 1.0;
+        this.dom.style.setProperty("opacity", 1.0);
     } else {
-        this.dom.style.opacity = 0.5;
+        this.dom.style.setProperty("opacity", 0.5);
     }
     this.updateConfig("transparent", !transparent);
 }
 PerfectFont.prototype.show = function () {
-    this.dom.style.display = "block";
+    this.dom.style.setProperty("display", "block");
     if (!this.fontList.style.height) {
         this.resizeHeight(this.dom.offsetHeight);
     }
 }
 PerfectFont.prototype.hide = function () {
-    this.dom.style.display = "none";
+    this.dom.style.setProperty("display", "none");
 }
 PerfectFont.prototype.close = function () {
-    this.dom.style.display = "none";
+    this.dom.style.setProperty("display", "none");
 }
