@@ -1,6 +1,6 @@
 
 # perfectfont #
-**Current Version**: 1.0 *(Dezember 08 2014)*   
+**Current Version**: 1.1.0 *(Dezember 13 2014)*   
 **Author(s)**: Robin Frischmann   
 **License**: Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
 
@@ -16,17 +16,20 @@
 ## Browser Support ##
 * Chrome (tested with latest version)
 * Safari
-
+* Firefox
+     
+## [Change Log](https://github.com/rofrischmann/perfectfont/blob/development/Changelog.md) ##
+    
 ## Coming soon ##
 * export the outcome as a CSS-file (with old fonts in comments above)
 * google font support 
 * test page on github
 * form to add custom fonts (drag & drop as well)
 * style, decoration, transform testing (bold, italic, uppercase, lowercase, underline, ...)
-* support for Firefox and Internet Explorer
+* support for Internet Explorer
 
 ## How to use ##
-Download the latest version [Here](https://github.com/rofrischmann/perfectfont/releases/download/v1.0/perfectfont_1.0.zip).   
+Download the latest version [Here](https://github.com/rofrischmann/perfectfont/releases).   
 I recommend using Chrome because it got a nice color picker to go with. 
 ```html
 <script type="text/javascript" src="perfectfont.min.js"></script>
@@ -56,14 +59,20 @@ fontWindow.addAvailableFont("Helvetica");
 fontWindow.addAvailableFont("Impact");
 ```
 
-### Window Settings ###
-```javascript
-fontWindow.toggleTransparency();
-fontWindow.dockLeft();
-fontWindow.dockRight();
-fontWindow.dockTop();
-fontWindow.maximize();
+
+## Custom Build ##
+perfectfont is build with [Grunt](http://gruntjs.com/). Just clone the source and install all dependecies.   
+```sh
+cd path/to/perfectfont/
+sudo npm install
 ```
+
+Running 
+```sh
+grunt
+```
+creates both minified and concated files within inside `path/to/perfectont/bin`.   
+
 
 ## Contact Me ##
 
