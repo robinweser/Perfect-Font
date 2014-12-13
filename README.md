@@ -2,7 +2,7 @@
 # perfectfont #
 **Current Version**: 1.1.0 *(Dezember 13 2014)*   
 **Author(s)**: Robin Frischmann   
-**License**: Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0)
+**License**: Apache License, Version 2.0 (https://github.com/rofrischmann/perfectfont/blob/development/LICENSE)
 
 **perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
 
