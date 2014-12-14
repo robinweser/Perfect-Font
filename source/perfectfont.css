@@ -14,11 +14,6 @@
 #       See the License for the specific language governing permissions and
 #       limitations under the License.
 #
-#       Projectname...................: perfectfont
-#
-#       Developer/Date................: Robin Frischmann, 08.12.2014
-#       Version/Release...............: 1.0
-#
 ******************************************************************************************/
 
 .transition-400 {
@@ -176,30 +171,30 @@
     font-weight: 300;
     font-size: 15px;
 }
-.perfectfont.fa{
+.perfectfont.fa {
     padding: 5px 2px 0px 2px;
     cursor: pointer;
     font-size: 16px;
     color: #727272;
 }
-.perfectfont.fa.active{
+.perfectfont.fa.active {
     color: black;
 }
 .perfectfont-availableFonts {
     width: 100%;
-    height: auto;
+    height: 200px;
     overflow-y: auto;
     display: block;
     outline-width: 0;
     outline: none;
     border: 0;
     padding: 5px 5px 5px 5px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 15px;
 }
 .perfectfont-availableFonts option {
     padding: 3px 5px 4px 5px;
     outline-width: 0;
     outline: none;
+    font-weight: 400;
 }

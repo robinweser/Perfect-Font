@@ -14,11 +14,6 @@
 #       See the License for the specific language governing permissions and
 #       limitations under the License.
 #
-#       Projectname...................: extend
-#
-#       Developer/Date................: Robin Frischmann, 08.12.2014
-#       Version/Release...............: 1.1
-#
 ******************************************************************************************/
 
 /* EXTEND OBJECT */
@@ -71,32 +66,32 @@ var Extend = {
 /* OBJECT ADDITIONS */
 //NUMBER
 //Validates if a value actually is a number
-Number.prototype.isNumeric = function () {
+Number.isNumeric = function () {
     return !isNaN(parseFloat(this)) && isFinite(this);
 };
 
 
 //STRING
 //Validates if a value actually is a number
-String.prototype.isNumeric = function () {
+String.isNumeric = function () {
     return !isNaN(parseFloat(this)) && isFinite(this);
 };
 
 
 //ARRAY
 //Returns a true clone of an array
-Array.prototype.clone = function () {
+Array.clone = function () {
     return JSON.parse(JSON.stringify(this));
 }
 
 
 //OBJECT
 //Returns a true clone of an object
-Object.prototype.clone = function () {
+Object.clone = function () {
     return JSON.parse(JSON.stringify(this));
 }
 //Returns an alphabethic or value-base ascending/descending sorted Object (child objects sorted if recursive)
-Object.prototype.sort = function (recursive, direction, caseSensitive, sortByValue) {
+Object.sort = function (recursive, direction, caseSensitive, sortByValue) {
     var dir = (direction ? direction : "ASC");
     var me = this;
     var tempArray = [];

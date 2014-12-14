@@ -14,11 +14,6 @@
 #       See the License for the specific language governing permissions and
 #       limitations under the License.
 #
-#       Projectname...................: perfectfont
-#
-#       Developer/Date................: Robin Frischmann, 08.12.2014
-#       Version/Release...............: 1.0
-#
 ******************************************************************************************/
 
 PerfectFont.UsedFont = function (id, fontName, fontDetails) {

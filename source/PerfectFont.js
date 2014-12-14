@@ -14,11 +14,6 @@
 #       See the License for the specific language governing permissions and
 #       limitations under the License.
 #
-#       Projectname...................: perfectfont
-#
-#       Developer/Date................: Robin Frischmann, 08.12.2014
-#       Version/Release...............: 1.0
-#
 ******************************************************************************************/
 
 // -- CONFIGURATION -- //
@@ -27,22 +22,22 @@ var defaults = {
     maximized: false,
     docked: false,
     transparent: false,
-    livePreview: true,
-    controlButton: true
+    controlButton: true,
+    fonts: {
+        googleWebFonts: {
+            serif: true,
+            sansSerif: false,
+            handwriting: false,
+            display: false,
+            monospace: false
+        }
+    }
 };
 // -- CONFIGURATION -- //
 
 var currentPerfectFont;
 var mouseX, mouseY, lDivX, lDivY;
 var move = false;
-var toggleActive = function (elem) {
-    if (elem.classList.contains("active")) {
-        elem.classList.remove("active");
-    } else {
-        elem.classList.add("active");
-    }
-}
-
 var PerfectFont = function (config) {
     //TODO: config dynamisch ersetzen
     if (!config) {
@@ -154,7 +149,11 @@ PerfectFont.prototype.initWindowSettings = function () {
         currentPerfectFont.dock("right");
     })
     toggleTransparencyButton.addEventListener("click", function () {
-        toggleActive(this);
+        if (this.classList.contains("active")) {
+            this.classList.remove("active");
+        } else {
+            this.classList.add("active");
+        }
         currentPerfectFont.toggleTransparency();
     })
     closeButton.addEventListener("click", function () {
@@ -164,7 +163,6 @@ PerfectFont.prototype.initWindowSettings = function () {
         currentPerfectFont.minimize();
     })
     maximizeButton.addEventListener("click", function () {
-        toggleActive(this);
         currentPerfectFont.maximize();
     })
     this.header.appendChild(closeButton);
@@ -207,7 +205,6 @@ PerfectFont.prototype.initPreferenceView = function () {
     }
     this.availableFonts = document.createElement("select");
     this.availableFonts.classList.add("perfectfont-availableFonts");
-    this.availableFonts.size = "5";
     this.availableFonts.onchange = function () {
         currentPerfectFont.updateUsedFont(this)
     };
@@ -216,6 +213,8 @@ PerfectFont.prototype.initPreferenceView = function () {
     this.initFonts();
 }
 PerfectFont.prototype.initFonts = function () {
+    var gwf = this.getConfig("fonts").googleWebFonts;
+    this.loadGoogleWebFonts(gwf.serif, gwf.sansSerif, gwf.handwriting, gwf.display, gwf.monospace);
     this.initUsedFonts();
     for (var i = 0; i < this.usedFonts.length; ++i) {
         this.addFontToFontList(this.usedFonts[i]);
@@ -268,11 +267,34 @@ PerfectFont.prototype.isAvailableLocalFont = function (fontName) {
 PerfectFont.prototype.getUsedFonts = function () {
     return this.usedFonts;
 }
-PerfectFont.prototype.loadGoogleWebFonts = function () {
-    this.availableFonts.innerHTML = '<option  class="perfectfont">Lato</option><option  class="perfectfont">Arial</option><option class="perfectfont">Impact</option><option class="perfectfont">Neucha</option><option class="perfectfont">UnverschaemtSans</option>'
+PerfectFont.prototype.loadGoogleWebFonts = function (serif, sansSerif, handwriting, display, monospace) {
+    var headFile = document.createElement("link");
+    headFile.rel = "stylesheet";
+    headFile.type = "text/css";
+    headFile.href = "http://fonts.googleapis.com/css?family=";
+    var includeFontByStyle = function (style) {
+        var first = true;
+        for (var i in googlefonts[style]) {
+            if (!first) {
+                headFile.href += "|";
+            }
+            first = false;
+            headFile.href += i.replace(/ /g, "+");
+            if (googlefonts[style][i] != "") {
+                headFile.href += ":" + googlefonts[style][i];
+            }
+            currentPerfectFont.addAvailableFont(i);
+        }
+    }
+    if (serif) {
+        includeFontByStyle("serif");
+    }
+    headFile.href += "&subset=latin,latin-ext,greek-ext,greek,devanagari,cyrillic,cyrillic-ext,vietnamese";
+    document.head.appendChild(headFile);
 }
 PerfectFont.prototype.addAvailableFont = function (font) {
-    this.availableFonts.innerHTML += '<option  class="perfectfont" style="font-family:' + font + '">' + font + '</option>';
+    this.availableFonts.innerHTML += '<option  class="perfectfont" style="font-family:' + font + ' !important">' + font + '</option>';
+    this.availableFonts.size = (parseInt(this.availableFonts.size) + 1);
 }
 PerfectFont.prototype.addFontToFontList = function (usedFont) {
     var tempListItem = document.createElement("li");
@@ -334,14 +356,19 @@ PerfectFont.prototype.updateConfig = function (preference, value) {
     this.config[preference] = value;
 }
 PerfectFont.prototype.resizeHeight = function (newHeight) {
+    this.dom.classList.add("transition-400");
     this.dom.style.setProperty("height", newHeight + "px");
     var newInnerHeight = newHeight - this.header.offsetHeight;
     this.fontList.style.setProperty("height", (newInnerHeight - 1) + "px");
     this.fontDetail.style.setProperty("height", (newInnerHeight - 2) + "px");
+    this.availableFonts.style.setProperty("height", (newInnerHeight - (5 * document.getElementById("perfectfont-preference-fontSize").offsetHeight) - 2) + "px");
     document.getElementById("perfectfont-preference-color").style.setProperty("height", document.getElementById("perfectfont-preference-fontSize").offsetHeight + "px");
+    setTimeout('currentPerfectFont.dom.classList.remove("transition-400")', 400);
 }
 PerfectFont.prototype.resizeWidth = function (newWidth) {
+    this.dom.classList.add("transition-400");
     this.dom.style.setProperty("width", newWidth + "px");
+    setTimeout('currentPerfectFont.dom.classList.remove("transition-400")', 400);
 }
 PerfectFont.prototype.updatePosition = function (x, y) {
     this.dom.style.setProperty("left", x + "px");

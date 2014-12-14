@@ -18,8 +18,13 @@
 * Safari
 * Firefox
      
-## [Change Log](https://github.com/rofrischmann/perfectfont/blob/development/Changelog.md) ##
-    
+## Change Log ##
+#### Last Changes (1.1.0) ####
+* menu buttons to minimize, maximize, close, dock left/top/right and toggle transparency
+* added firefox support
+     
+Visit [Change Log](https://github.com/rofrischmann/perfectfont/blob/development/Changelog.md) for whole change history.   
+ 
 ## Coming soon ##
 * export the outcome as a CSS-file (with old fonts in comments above)
 * google font support 

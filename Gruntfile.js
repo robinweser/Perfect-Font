@@ -3,7 +3,7 @@ module.exports = function (grunt) {
         pkg: '<json:package.json>',
         concat: {
             dist: {
-                src: 'source/*.js',
+                src: ['source/*.js', 'source/lib/*.js', 'source/fontlists/*.js'],
                 dest: 'bin/perfectfont.js'
             }
         },
