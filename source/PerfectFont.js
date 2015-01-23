@@ -130,7 +130,7 @@ PerfectFont.prototype.initWindowSettings = function () {
 
     var vendors = ["-webkit-", "-moz-", "-ms-", "-khtml", "-o"];
     vendors.forEach(function (item) {
-        closeButton.style.setProperty(item + "-transform", "rotate(45deg)")
+        closeButton.style.setProperty(item + "transform", "rotate(45deg)")
     })
     closeButton.style.setProperty("float", "left");
     minimizeButton.style.setProperty("float", "left");
