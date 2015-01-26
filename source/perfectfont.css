@@ -1,21 +1,3 @@
-/******************************************************************************************
-#
-#       Copyright 2014 Robin Frischmann
-#
-#       Licensed under the Apache License, Version 2.0 (the "License");
-#       you may not use this file except in compliance with the License.
-#       You may obtain a copy of the License at
-#
-#         http://www.apache.org/licenses/LICENSE-2.0
-#
-#       Unless required by applicable law or agreed to in writing, software
-#       distributed under the License is distributed on an "AS IS" BASIS,
-#       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#       See the License for the specific language governing permissions and
-#       limitations under the License.
-#
-******************************************************************************************/
-
 .transition-400 {
     -webkit-transition: all 400ms ease-in-out;
     -moz-transition: all 400ms ease-in-out;
@@ -23,14 +5,15 @@
     -ms-transition: all 400ms ease-in-out;
     transition: all 400ms ease-in-out;
 }
-.perfectfont-container {
+
+#perfectfont-window {
     width: 400px;
     height: 450px;
     font-size: 16px;
     left: 300px;
     top: 10px;
     border-radius: 6px;
-    position: absolute;
+    position: fixed;
     z-index: 999999;
     background: rgba(237, 237, 237, 0.75);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
@@ -40,13 +23,14 @@
     display: none;
     border: 1px solid rgba(183, 183, 183, 0.85);
 }
-.perfectfont-header {
+
+#perfectfont-header {
     width: 100%;
     padding: 11px 8px 11px 11px;
-    font-size: 20px;
+    font-size: 17px;
     text-align: center;
     box-sizing: border-box;
-    background: rgb(239, 239, 239);
+    background: rgb(232, 232, 232);
     border-radius: 6px 6px 0px 0px;
     color: #3c3c3c;
     border-bottom: 1px solid #b7b7b7;
@@ -59,10 +43,8 @@
     user-select: none;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-::-webkit-scrollbar {
-    display: none
-}
-.perfectfont-fontlist {
+
+#perfectfont-list {
     width: 35%;
     height: 100%;
     display: inline-block;
@@ -75,14 +57,15 @@
     overflow-y: auto;
     white-space: nowrap;
     background: rgba(81, 113, 157, 0.1);
-    border-right: 2px solid rgba(145, 145, 145, 1);
+    border-right: 1px solid rgba(175, 175, 175, 0.56);
     vertical-align: top;
 }
-.perfectfont-fontlist li {
+
+#perfectfont-list li {
     list-style-type: none;
     padding: 7px 10px 9px 10px;
-    background: rgba(255, 255, 255, 0.7);
-    border-bottom: 1px solid rgba(145, 145, 145, 0.5);
+    background: rgba(240, 240, 240, 0.94);
+    border-bottom: 1px solid rgb(199, 199, 199);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -91,17 +74,19 @@
     user-select: none;
     cursor: pointer;
 }
-.perfectfont-fontlist li span {
+
+#perfectfont-list li span {
     color: #a7a7a7;
     font-size: 11px;
     display: block;
 }
-.perfectfont-fontlist li.perfectfont-active {
-    background: rgba(255, 255, 255, 1);
+
+#perfectfont-list li.perfectfont-selected {
+    background: white;
 }
-.perfectfont-fontdetail {
+
+#perfectfont-detail {
     width: 65%;
-    height: 100%;
     color: #818181;
     display: inline-block;
     box-sizing: border-box;
@@ -109,13 +94,15 @@
     overflow: auto;
     background: rgba(255, 255, 255, 1);
 }
-.perfectfont-preference {
+
+#perfectfont-preference {
     width: 50%;
     display: inline-block;
     box-sizing: border-box;
     vertical-align: top;
 }
-.perfectfont-preference li {
+
+#perfectfont-preference li {
     padding: 7px 10px 9px 10px;
     border-bottom: 1px solid rgba(196, 196, 196, 0.85);
     border-right: 1px solid rgba(196, 196, 196, 0.85);
@@ -125,18 +112,21 @@
     font-size: 15px;
     display: block;
 }
-.perfectfont-preference span {
+
+#perfectfont-preference span {
     font-size: 12px;
     color: #8e8e8e;
     display: inline-block;
 }
-.perfectfont-preferenceValue {
+
+#perfectfont-value {
     width: 50%;
     display: inline-block;
     vertical-align: top;
     box-sizing: border-box;
 }
-.perfectfont-preferenceValue input {
+
+#perfectfont-value input {
     width: 100%;
     box-sizing: border-box;
     display: block;
@@ -152,16 +142,20 @@
     outline: none;
     font-weight: 300;
 }
-.perfectfont-preferenceValue input[type=color] {
+
+#perfectfont-preference-value input[type=color] {
     padding: 0px 1px 0px 1px;
 }
-.perfectfont-preferenceValue input:hover {
+
+#perfectfont-preference-value input:hover {
     background: rgba(255, 255, 255, 0.15);
 }
-.perfectfont-preferenceValue input:focus {
+
+#perfectfont-preference-value input:focus {
     background: rgba(255, 255, 255, 0.25);
 }
-.perfectfont-availableFonts {
+
+#perfectfont-available {
     width: 100%;
     height: auto;
     overflow-y: auto;
@@ -174,28 +168,8 @@
     font-weight: 300;
     font-size: 15px;
 }
-.perfectfont.fa {
-    padding: 5px 2px 0px 2px;
-    cursor: pointer;
-    font-size: 16px;
-    color: #727272;
-}
-.perfectfont.fa.active {
-    color: black;
-}
-.perfectfont-availableFonts {
-    width: 100%;
-    height: 200px;
-    overflow-y: auto;
-    display: block;
-    outline-width: 0;
-    outline: none;
-    border: 0;
-    padding: 5px 5px 5px 5px;
-    font-weight: 400;
-    font-size: 15px;
-}
-.perfectfont-availableFonts option {
+
+#perfectfont-availableFonts option {
     padding: 3px 5px 4px 5px;
     outline-width: 0;
     outline: none;
