@@ -66,6 +66,7 @@ var perfectfont = {
 
         //body
         this.window.innerHTML += '<ul id="' + preId + 'list"></ul>';
+        this.window.innerHTML += '<select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)">';
         this.window.innerHTML += '<div id="' + preId + 'detail"><div id="' + preId + 'preference"></div><div id="' + preId + 'value"></div></div>';
 
         this.initTools();
@@ -81,9 +82,9 @@ var perfectfont = {
         var valueContainer = document.getElementById(preId + "value");
         var detailContainer = document.getElementById(preId + "detail");
 
-        var preferenceNames = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', "Color"];
-        var valueTypes = ["number", "number", "number", "number", "color"];
-        var valueIds = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "color"];
+        var preferenceNames = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', "Line Height", "Color"];
+        var valueTypes = ["number", "number", "number", "number", "number", "color"];
+        var valueIds = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "lineHeight", "color"];
 
         var preferenceList = "";
         var valueList = "";
@@ -98,7 +99,8 @@ var perfectfont = {
         }
         preferenceContainer.innerHTML = preferenceList;
         valueContainer.innerHTML = valueList;
-        detailContainer.innerHTML += '<select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)">';
+        detailContainer.innerHTML += '<span class="perfectfont-styletool">B</span><span class="perfectfont-styletool">I</span>';
+        detailContainer.innerHTML += '<span class="perfectfont-styletool">U</span><span class="perfectfont-styletool">aA</span><span class="perfectfont-styletool">u</span>'
     },
 
 
@@ -144,6 +146,7 @@ var perfectfont = {
                     fontSize: this.getStyleProperty(tempItem, "font-size"),
                     letterSpacing: (this.getStyleProperty(tempItem, "letter-spacing") == "normal" ? 0 : this.getStyleProperty(tempItem, "font-weight")),
                     wordSpacing: this.getStyleProperty(tempItem, "word-spacing"),
+                    lineHeight: this.getStyleProperty(tempItem, "line-height"),
                     color: this.getStyleProperty(tempItem, "color"),
                     fontStyle: this.getStyleProperty(tempItem, "font-style"),
                     fontVariant: this.getStyleProperty(tempItem, "font-variant")
@@ -192,6 +195,7 @@ var perfectfont = {
         document.getElementById(preId + "fontWeight").value = this.selectedUsedFont.fontDetails.fontWeight;
         document.getElementById(preId + "letterSpacing").value = parseFloat(this.selectedUsedFont.fontDetails.letterSpacing);
         document.getElementById(preId + "wordSpacing").value = parseFloat(this.selectedUsedFont.fontDetails.wordSpacing);
+        document.getElementById(preId + "lineHeight").value = parseFloat(this.selectedUsedFont.fontDetails.lineHeight);
         document.getElementById(preId + "color").value = this.selectedUsedFont.fontDetails.color;
     },
 
@@ -221,34 +225,67 @@ var perfectfont = {
         return window.getComputedStyle(DOMElement).getPropertyValue(property);
     },
 
-    loadGoogleWebFonts: function (serif, sansSerif, handwriting, display, monospace) {
-        var headFile = document.createElement("link");
-        headFile.rel = "stylesheet";
-        headFile.type = "text/css";
-        headFile.href = "http://fonts.googleapis.com/css?family=";
-        var includeFontByStyle = function (style) {
-            var first = true;
-            for (var i in googlefonts[style]) {
-                if (!first) {
-                    headFile.href += "|";
+    getGoogleWebFonts: function (serif, sansSerif, handwriting, display, monospace) {
+        this.loadGoogleWebFonts(function callback(response) {
+            var styles = ["serif", "sans-serif", "handwriting", "display", "monospace"];
+            var options = [serif, sansSerif, handwriting, display, monospace];
+
+            var includeFontByStyle = function (headFile, style) {
+                var first = true;
+                for (var i in response[style]) {
+                    if (!first) {
+                        headFile.href += "|";
+                    }
+                    first = false;
+                    headFile.href += i.replace(/ /g, "+");
+                    if (response[style][i] != "") {
+                        headFile.href += ":" + response[style][i];
+                    }
+                    perfectfont.addAvailableFont(i);
                 }
-                first = false;
-                headFile.href += i.replace(/ /g, "+");
-                if (googlefonts[style][i] != "") {
-                    headFile.href += ":" + googlefonts[style][i];
-                }
-                this.addAvailableFont(i);
             }
-        }
-        if (serif) {
-            includeFontByStyle("serif");
-        }
-        headFile.href += "&subset=latin,latin-ext,greek-ext,greek,devanagari,cyrillic,cyrillic-ext,vietnamese";
-        document.head.appendChild(headFile);
+
+            for (var i = 0; i < options.length; ++i) {
+                if (options[i]) {
+                    var headFile = document.createElement("link");
+                    headFile.rel = "stylesheet";
+                    headFile.type = "text/css";
+                    headFile.href = "http://fonts.googleapis.com/css?family=";
+
+                    includeFontByStyle(headFile, styles[i]);
+
+                    headFile.href += "&subset=latin,latin-ext,greek-ext,greek,devanagari,cyrillic,cyrillic-ext,vietnamese";
+                    document.head.appendChild(headFile);
+                }
+            }
+        });
     },
 
-    getGoogleWebFonts: function () {
-
+    loadGoogleWebFonts: function (callback) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
+            if (request.readyState == 4 && request.status == 200) {
+                var googleWebFontsJSON = JSON.parse(request.responseText);
+                var googleFonts = {
+                    "serif": {},
+                    "sans-serif": {},
+                    "display": {},
+                    "handwriting": {},
+                    "monospace": {}
+                };
+                for (var i = 0; i < googleWebFontsJSON.items.length; ++i) {
+                    var temp = googleWebFontsJSON.items[i];
+                    var variants = temp.variants[0];
+                    for (var j = 1; j < temp.variants.length; ++j) {
+                        variants += temp.variants[j];
+                    }
+                    googleFonts[temp.category][temp.family] = variants;
+                }
+                callback(googleFonts);
+            }
+        }
+        request.open("GET", "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAu2_VZaGnLwopNWh8AWwDX3_aYUacza-Q", true);
+        request.send();
     },
 
     isAvailableFont: function (fontName) {

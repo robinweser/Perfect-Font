@@ -7,8 +7,8 @@
 }
 
 #perfectfont-window {
-    width: 400px;
-    height: 450px;
+    width: 600px;
+    height: 400px;
     font-size: 16px;
     left: 300px;
     top: 10px;
@@ -45,7 +45,7 @@
 }
 
 #perfectfont-list {
-    width: 35%;
+    width: 22.5%;
     height: 100%;
     display: inline-block;
     box-sizing: border-box;
@@ -56,16 +56,16 @@
     overflow-x: hidden;
     overflow-y: auto;
     white-space: nowrap;
-    background: rgba(81, 113, 157, 0.1);
-    border-right: 1px solid rgba(175, 175, 175, 0.56);
+    background: rgba(99, 168, 151, 0.5);
     vertical-align: top;
 }
 
 #perfectfont-list li {
     list-style-type: none;
     padding: 7px 10px 9px 10px;
-    background: rgba(240, 240, 240, 0.94);
-    border-bottom: 1px solid rgb(199, 199, 199);
+    background: rgba(94, 160, 145, 0.94);
+    border-bottom: 1px solid rgba(198, 198, 198, 0.6);
+    color: white;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -76,23 +76,39 @@
 }
 
 #perfectfont-list li span {
-    color: #a7a7a7;
+    color: #e8e8e8;
     font-size: 11px;
     display: block;
 }
 
 #perfectfont-list li.perfectfont-selected {
-    background: white;
+    background: rgb(48, 118, 101);
 }
 
 #perfectfont-detail {
-    width: 65%;
+    width: 40%;
     color: #818181;
     display: inline-block;
     box-sizing: border-box;
     border-radius: 0px 0px 6px 0px;
     overflow: auto;
     background: rgba(255, 255, 255, 1);
+}
+
+#perfectfont-available {
+    width: 37.5%;
+    height: auto;
+    overflow-y: auto;
+    display: inline-block;
+    vertical-align: top;
+    outline-width: 0;
+    outline: none;
+    border: 0;
+    padding: 5px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    border-right: 1px solid rgb(203, 203, 203);
+    font-size: 15px;
 }
 
 #perfectfont-preference {
@@ -102,12 +118,24 @@
     vertical-align: top;
 }
 
+.perfectfont-styletool {
+    width: 20%;
+    padding: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    border-left: 1px solid rgba(190, 190, 190, 0.67);
+    border-bottom: 1px solid rgba(190, 190, 190, 0.67);
+}
+.perfectfont-styletool:first-child{
+    border-left: none;
+}
+
 #perfectfont-preference li {
     padding: 7px 10px 9px 10px;
     border-bottom: 1px solid rgba(196, 196, 196, 0.85);
     border-right: 1px solid rgba(196, 196, 196, 0.85);
     margin: 0;
-    background: rgba(0, 0, 0, 0.08);
+    background: rgba(0, 0, 0, 0.045);
     list-style-type: none;
     font-size: 15px;
     display: block;
@@ -134,7 +162,7 @@
     border-width: 0px 0px 1px 0px;
     border-style: solid;
     background: rgba(255, 255, 255, 0.3);
-    color: #4b78ac;
+    color: #3d8983;
     border-color: rgba(196, 196, 196, 0.85);
     font-size: 15px;
     outline-width: 0;
@@ -143,34 +171,19 @@
     font-weight: 300;
 }
 
-#perfectfont-preference-value input[type=color] {
-    padding: 0px 1px 0px 1px;
+#perfectfont-value input[type=color] {
+    /*padding: 0px 1px 0px 1px;*/
 }
 
-#perfectfont-preference-value input:hover {
+#perfectfont-value input:hover {
     background: rgba(255, 255, 255, 0.15);
 }
 
-#perfectfont-preference-value input:focus {
+#perfectfont-value input:focus {
     background: rgba(255, 255, 255, 0.25);
 }
 
-#perfectfont-available {
-    width: 100%;
-    height: auto;
-    overflow-y: auto;
-    display: block;
-    outline-width: 0;
-    outline: none;
-    border: 0;
-    padding: 5px 5px 5px 5px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    font-size: 15px;
-}
-
-#perfectfont-availableFonts option {
-    padding: 3px 5px 4px 5px;
+#perfectfont-available option {
     outline-width: 0;
     outline: none;
     font-weight: 400;

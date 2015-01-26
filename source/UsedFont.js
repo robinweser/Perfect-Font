@@ -22,7 +22,7 @@ var UsedFont = function (id, fontName, fontDetails) {
     this.updateFontDetails = function (fontDetail, value) {
         this.fontDetails[fontDetail] = value;
         for (var i = 0; i < this.domElements.length; ++i) {
-            if (fontDetail == "fontSize" || fontDetail == "letterSpacing" || fontDetail == "wordSpacing") {
+            if (fontDetail == "fontSize" || fontDetail == "letterSpacing" || fontDetail == "wordSpacing" || fontDetail == "lineHeight") {
                 value += "px";
             };
             this.domElements[i].style[fontDetail] = value;
