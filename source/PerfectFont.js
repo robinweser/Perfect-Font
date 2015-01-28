@@ -5,7 +5,7 @@ var preId = "perfectfont-";
 var mouseX, mouseY, lDivX, lDivY;
 var move = false;
 
-var domElements = ["window", "header", "list", "detail", "search-container", "available-container", "available", "preference", "value"];
+var domElements = ["window", "header", "list-container", "list", "detail", "selection-container", "split-size", "search-container", "available-container", "available", "preference", "value"];
 var preferenceNames = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', 'Height <span class="perfectfont">(Line)</span>', "Color"];
 var valueTypes = ["number", "number", "number", "number", "number", "color"];
 var valueIds = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "lineHeight", "color"];
@@ -30,8 +30,9 @@ var defaults = {
 
 var perfectfont = {
     config: undefined,
-    selected: null,
+    selectionUsedFonts: [],
     usedFonts: [],
+    selectionAdded: 0,
     selectedUsedFont: null,
     selectedUsedFontId: null,
     dom: {},
@@ -59,11 +60,11 @@ var perfectfont = {
         window.innerHTML += '<div id="' + preId + 'header">' + windowTools + title + dockTools + '</div>';
 
         //body
-        window.innerHTML += '<div id="' + preId + 'list-container"><div id="' + preId + 'selection"><div>Add Selection</div></div><ul id="' + preId + 'list"></ul></div>';
+        window.innerHTML += '<div id="' + preId + 'list-container"><div id="' + preId + 'selection-container"><div id="' + preId + 'selection" onmousedown="perfectfont.addSelectionToList()">Add Selection</div></div><span id="' + preId + 'split-size"><input type="checkbox"> Split Sizes</span><ul id="' + preId + 'list"></ul></div>';
         var groups = "";
         fontStyles.forEach(function (item) {
             if (perfectfont.config.fonts.googleWebFonts[item.replace("-s", "S")]) {
-                groups += '<span onclick="perfectfont.filterAvailableFonts(this)">' + item + '</span>';
+                groups += '<span class="active" onclick="perfectfont.filterAvailableFonts(this)">' + item + '</span>';
             }
         });
         window.innerHTML += '<div id="' + preId + 'available-container"><div>' + groups + '</div><div id="' + preId + 'search-container"><input id="' + preId + 'search" placeholder="Search ..." onkeydown="perfectfont.searchAvailableFont(event, this.value)"></div><select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)"></div>';
@@ -120,7 +121,6 @@ var perfectfont = {
         this.initUsedFonts();
         this.usedFonts.forEach(function (item) {
             perfectfont.addFontToList(item);
-            perfectfont.addAvailableFont(item.fontName);
         });
 
         var gwf = this.config.fonts.googleWebFonts;
@@ -172,7 +172,6 @@ var perfectfont = {
     },
 
     enableDragDrop: function () {
-
         lDivX = parseInt(perfectfont.getStyleProperty(perfectfont.dom["window"], "left"));
         lDivY = parseInt(perfectfont.getStyleProperty(perfectfont.dom["window"], "top"));
 
@@ -208,15 +207,57 @@ var perfectfont = {
         this.dom["available"].size += 1;
     },
 
-    addFontToList: function (usedFont) {
-        var newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">' + usedFont.fontName + '</p><span class="perfectfont">' + usedFont.originFontName + ' - ' + usedFont.fontDetails.fontSize + '</span></li>'
+    addFontToList: function (usedFont, selection) {
+        var newUsedFont;
+        if (selection) {
+            newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this, true)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">#' + usedFont.id + '</p><span class="perfectfont">' + usedFont.originFontName + ' - ' + usedFont.fontDetails.fontSize + '</span></li>'
+        } else {
+            newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">' + usedFont.fontName + '</p><span class="perfectfont">' + usedFont.originFontName + ' - ' + usedFont.fontDetails.fontSize + '</span></li>'
+        }
         this.dom["list"].innerHTML += newUsedFont;
         this.dom["list"].childNodes[this.dom["list"].childNodes.length - 1].click();
+        this.dom["list"].scrollTop = this.dom["list"].childNodes[this.dom["list"].childNodes.length - 1].offsetTop - this.dom["list"].offsetHeight - 14;
     },
 
-    setSelectedUsedFont: function (clickedElement) {
+    addSelectionToList: function () {
+        var selection = window.getSelection();
+
+        if (selection.rangeCount > 0) {
+            var range = selection.getRangeAt(0);
+            var content = range.extractContents();
+            var tempItem = document.createElement('span');
+
+            tempItem.id = "selection" + (this.selectionUsedFonts.length);
+            tempItem.appendChild(content);
+            var htmlContent = tempItem.innerHTML;
+            range.insertNode(tempItem);
+            var tempFontDetails = {
+                fontWeight: (this.getStyleProperty(tempItem, "font-weight") == "normal" ? 400 : this.getStyleProperty(tempItem, "font-weight")),
+                fontSize: this.getStyleProperty(tempItem, "font-size"),
+                letterSpacing: (this.getStyleProperty(tempItem, "letter-spacing") == "normal" ? 0 : this.getStyleProperty(tempItem, "font-weight")),
+                wordSpacing: this.getStyleProperty(tempItem, "word-spacing"),
+                lineHeight: this.getStyleProperty(tempItem, "line-height"),
+                color: this.getStyleProperty(tempItem, "color"),
+                fontStyle: this.getStyleProperty(tempItem, "font-style"),
+                fontVariant: this.getStyleProperty(tempItem, "font-variant")
+            }
+            var selectionUsedFont = new UsedFont();
+            selectionUsedFont.init(tempItem.id, this.getStyleProperty(tempItem, "font-family"), tempFontDetails);
+            selectionUsedFont.addDomElement(tempItem);
+            this.selectionUsedFonts.push(selectionUsedFont);
+            this.addFontToList(selectionUsedFont, true);
+        } else {
+            alert("You need to select something in order to add it to the list");
+        }
+    },
+
+    setSelectedUsedFont: function (clickedElement, selection) {
         this.selectedUsedFontId = clickedElement.id.replace(preId, "");
-        this.selectedUsedFont = this.usedFonts[this.selectedUsedFontId];
+        if (selection) {
+            this.selectedUsedFont = this.selectionUsedFonts[this.selectedUsedFontId.replace("selection", "")];
+        } else {
+            this.selectedUsedFont = this.usedFonts[this.selectedUsedFontId];
+        }
 
         if (document.getElementsByClassName(preId + "selected").length > 0) {
             document.getElementsByClassName(preId + "selected")[0].classList.remove(preId + "selected");
@@ -224,9 +265,8 @@ var perfectfont = {
         clickedElement.classList.add("perfectfont-selected");
 
     },
-    showUsedFontPreferences: function (clickedElement) {
-        this.setSelectedUsedFont(clickedElement);
-
+    showUsedFontPreferences: function (clickedElement, selection) {
+        this.setSelectedUsedFont(clickedElement, selection);
         if (this.selectedUsedFont.fontDetails.fontWeight == "normal") {
             this.selectedUsedFont.fontDetails.fontWeight = 400;
         }
@@ -254,7 +294,7 @@ var perfectfont = {
     searchAvailableFont: function (e, font) {
         var filterDomElements = this.dom["available"].childNodes;
         for (var i = 0; i < filterDomElements.length; ++i) {
-            if (filterDomElements[i].innerHTML.toLowerCase().indexOf(font) != -1) {
+            if (filterDomElements[i].innerHTML.toLowerCase().indexOf(font.toLowerCase()) != -1) {
                 filterDomElements[i].style.setProperty("display", "block");
             } else {
                 filterDomElements[i].style.setProperty("display", "none");
@@ -366,8 +406,9 @@ var perfectfont = {
     resizeHeight: function (newHeight) {
         var newInnerHeight = newHeight - this.dom["header"].offsetHeight;
         var availableInnerHeight = (newInnerHeight - this.dom["available-container"].childNodes[0].offsetHeight - this.dom["search-container"].offsetHeight);
+        var listInnerHeight = (newInnerHeight - this.dom["selection-container"].offsetHeight - this.dom["split-size"].offsetHeight);
         this.dom["window"].style.setProperty("height", newHeight + "px");
-        this.dom["list"].style.setProperty("height", (newInnerHeight - 2) + "px");
+        this.dom["list-container"].style.setProperty("height", (listInnerHeight - 2) + "px");
         this.dom["detail"].style.setProperty("height", (newInnerHeight - 2) + "px");
         this.dom["available-container"].style.setProperty("height", (newInnerHeight - 2) + "px");
         this.dom["available"].style.setProperty("height", (availableInnerHeight - 2) + "px");
