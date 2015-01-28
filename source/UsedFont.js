@@ -1,4 +1,4 @@
-var UsedFont = function (id, fontName, fontDetails) {
+var UsedFont = function () {
     this.init = function (id, fontName, fontDetails) {
         this.id = id;
         this.domElements = [];

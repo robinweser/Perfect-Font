@@ -5,7 +5,7 @@ var preId = "perfectfont-";
 var mouseX, mouseY, lDivX, lDivY;
 var move = false;
 
-var domElements = ["window", "header", "list", "detail", "available-container", "available", "preference", "value"];
+var domElements = ["window", "header", "list", "detail", "search-container", "available-container", "available", "preference", "value"];
 var preferenceNames = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', 'Height <span class="perfectfont">(Line)</span>', "Color"];
 var valueTypes = ["number", "number", "number", "number", "number", "color"];
 var valueIds = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "lineHeight", "color"];
@@ -21,9 +21,9 @@ var defaults = {
         googleWebFonts: {
             serif: true,
             sansSerif: true,
-            handwriting: false,
-            display: false,
-            monospace: false
+            handwriting: true,
+            display: true,
+            monospace: true
         }
     }
 };
@@ -59,12 +59,14 @@ var perfectfont = {
         window.innerHTML += '<div id="' + preId + 'header">' + windowTools + title + dockTools + '</div>';
 
         //body
-        window.innerHTML += '<ul id="' + preId + 'list"></ul>';
+        window.innerHTML += '<div id="' + preId + 'list-container"><div id="' + preId + 'selection"><div>Add Selection</div></div><ul id="' + preId + 'list"></ul></div>';
         var groups = "";
         fontStyles.forEach(function (item) {
-            groups += '<span onclick="perfectfont.filterAvailableFonts(this)">' + item + '</span>';
+            if (perfectfont.config.fonts.googleWebFonts[item.replace("-s", "S")]) {
+                groups += '<span onclick="perfectfont.filterAvailableFonts(this)">' + item + '</span>';
+            }
         });
-        window.innerHTML += '<div id="' + preId + 'available-container"><div>' + groups + '</div><select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)"></div>';
+        window.innerHTML += '<div id="' + preId + 'available-container"><div>' + groups + '</div><div id="' + preId + 'search-container"><input id="' + preId + 'search" placeholder="Search ..." onkeydown="perfectfont.searchAvailableFont(event, this.value)"></div><select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)"></div>';
         window.innerHTML += '<div id="' + preId + 'detail"><div id="' + preId + 'preference"></div><div id="' + preId + 'value"></div></div>';
 
         this.initDom();
@@ -235,10 +237,28 @@ var perfectfont = {
     },
 
     filterAvailableFonts: function (clickedElement) {
+        var display;
         if (clickedElement.classList.contains("active")) {
             clickedElement.classList.remove("active");
+            display = "none";
         } else {
             clickedElement.classList.add("active");
+            display = "block";
+        };
+        var filterDomElements = this.dom["available"].getElementsByClassName(clickedElement.innerHTML);
+        for (var i = 0; i < filterDomElements.length; ++i) {
+            filterDomElements[i].style.setProperty("display", display);
+        }
+    },
+
+    searchAvailableFont: function (e, font) {
+        var filterDomElements = this.dom["available"].childNodes;
+        for (var i = 0; i < filterDomElements.length; ++i) {
+            if (filterDomElements[i].innerHTML.toLowerCase().indexOf(font) != -1) {
+                filterDomElements[i].style.setProperty("display", "block");
+            } else {
+                filterDomElements[i].style.setProperty("display", "none");
+            }
         }
     },
 
@@ -345,12 +365,12 @@ var perfectfont = {
 
     resizeHeight: function (newHeight) {
         var newInnerHeight = newHeight - this.dom["header"].offsetHeight;
-
+        var availableInnerHeight = (newInnerHeight - this.dom["available-container"].childNodes[0].offsetHeight - this.dom["search-container"].offsetHeight);
         this.dom["window"].style.setProperty("height", newHeight + "px");
         this.dom["list"].style.setProperty("height", (newInnerHeight - 2) + "px");
         this.dom["detail"].style.setProperty("height", (newInnerHeight - 2) + "px");
         this.dom["available-container"].style.setProperty("height", (newInnerHeight - 2) + "px");
-        this.dom["available"].style.setProperty("height", (newInnerHeight - this.dom["available-container"].childNodes[0].offsetHeight - 2) + "px");
+        this.dom["available"].style.setProperty("height", (availableInnerHeight - 2) + "px");
         var fontSizeOffsetHeight = this.dom["fontSize"].offsetHeight;
 
         this.dom["color"].style.setProperty("height", fontSizeOffsetHeight + "px");
