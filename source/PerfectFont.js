@@ -1,35 +1,26 @@
-/******************************************************************************************
-#
-#       Copyright 2014 Robin Frischmann
-#
-#       Licensed under the Apache License, Version 2.0 (the "License");
-#       you may not use this file except in compliance with the License.
-#       You may obtain a copy of the License at
-#
-#         http://www.apache.org/licenses/LICENSE-2.0
-#
-#       Unless required by applicable law or agreed to in writing, software
-#       distributed under the License is distributed on an "AS IS" BASIS,
-#       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#       See the License for the specific language governing permissions and
-#       limitations under the License.
-#
-******************************************************************************************/
-
 var title = "Perfect Font";
 var preId = "perfectfont-";
 
+
+var mouseX, mouseY, lDivX, lDivY;
+var move = false;
+
+var domElements = ["window", "header", "list", "detail", "available-container", "available", "preference", "value"];
+var preferenceNames = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', 'Height <span class="perfectfont">(Line)</span>', "Color"];
+var valueTypes = ["number", "number", "number", "number", "number", "color"];
+var valueIds = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "lineHeight", "color"];
+var fontStyles = ["serif", "sans-serif", "handwriting", "display", "monospace"];
 
 var defaults = {
     draggable: true,
     maximized: false,
     docked: false,
     transparent: false,
-    controlButton: true,
+    controlButton: false,
     fonts: {
         googleWebFonts: {
             serif: true,
-            sansSerif: false,
+            sansSerif: true,
             handwriting: false,
             display: false,
             monospace: false
@@ -40,10 +31,10 @@ var defaults = {
 var perfectfont = {
     config: undefined,
     selected: null,
-    window: undefined,
     usedFonts: [],
     selectedUsedFont: null,
     selectedUsedFontId: null,
+    dom: {},
 
     //Initialized perfectfont with a config
     init: function (config) {
@@ -61,14 +52,18 @@ var perfectfont = {
         this.window = document.createElement("div");
         this.window.id = preId + "window";
         document.body.appendChild(this.window);
+
         //header
-        this.window.innerHTML += '<div id="' + preId + 'header">' + title + '</div>';
+        var windowTools = '<span id="perfectfont-close" onclick="perfectfont.close()"></span><span id="perfectfont-min" onclick="perfectfont.close()"></span><span id="perfectfont-max" onclick="perfectfont.maximize()"></span>';
+        var dockTools = '<span id="perfectfont-dock-right" onclick="perfectfont.dockRight()"></span><span id="perfectfont-dock-top" onclick="perfectfont.dockTop()"></span><span id="perfectfont-dock-left" onclick="perfectfont.dockLeft()"></span>';
+        window.innerHTML += '<div id="' + preId + 'header">' + windowTools + title + dockTools + '</div>';
 
         //body
         this.window.innerHTML += '<ul id="' + preId + 'list"></ul>';
         this.window.innerHTML += '<select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)">';
         this.window.innerHTML += '<div id="' + preId + 'detail"><div id="' + preId + 'preference"></div><div id="' + preId + 'value"></div></div>';
 
+                this.initDom();
         this.initTools();
         this.initDetails();
     },
@@ -301,10 +296,94 @@ var perfectfont = {
     updateUsedFontDetail: function (clickedElement) {
         this.selectedUsedFont.updateFontDetails(clickedElement.id.replace(preId, ""), clickedElement.value);
     },
-    show: function () {
-        this.window.style.setProperty("display", "block");
+        resizeHeight: function (newHeight) {
+        var newInnerHeight = newHeight - this.dom["header"].offsetHeight;
+
+        this.dom["window"].style.setProperty("height", newHeight + "px");
+        this.dom["list"].style.setProperty("height", (newInnerHeight - 2) + "px");
+        this.dom["detail"].style.setProperty("height", (newInnerHeight - 2) + "px");
+        this.dom["available-container"].style.setProperty("height", (newInnerHeight - 2) + "px");
+        this.dom["available"].style.setProperty("height", (newInnerHeight - this.dom["available-container"].childNodes[0].offsetHeight - 2) + "px");
+        var fontSizeOffsetHeight = this.dom["fontSize"].offsetHeight;
+
+        this.dom["color"].style.setProperty("height", fontSizeOffsetHeight + "px");
     },
+
+    resizeWidth: function (newWidth) {
+        this.dom["window"].style.setProperty("width", newWidth + "px");
+    },
+
+    updatePosition: function (x, y) {
+        this.dom["window"].style.setProperty("left", x + "px");
+        this.dom["window"].style.setProperty("top", y + "px");
+    },
+
+    maximize: function () {
+        if (this.config.maximized) {
+            this.resizeWidth(600);
+            this.resizeHeight(400);
+            this.updatePosition(lDivX, lDivY);
+        } else {
+            this.resizeWidth(window.innerWidth);
+            this.resizeHeight(window.innerHeight + 1);
+            this.updatePosition(0, 0)
+        }
+        this.config.maximized = !this.config.maximized;
+    },
+
+    dock: function (position) {
+        var newDocked = false;
+        if (this.config.docked == position) {
+            this.resizeWidth(600);
+            this.resizeHeight(400);
+            this.updatePosition(lDivX, lDivY);
+            newDocked = false;
+        } else {
+            newDocked = position;
+            switch (position) {
+            case "left":
+                this.updatePosition(0, 0);
+                this.resizeHeight(window.innerHeight);
+                this.resizeWidth(600);
+                break;
+            case "right":
+                this.updatePosition(window.innerWidth - 600, 0);
+                this.resizeHeight(window.innerHeight);
+                this.resizeWidth(600);
+                break;
+            case "top":
+                this.updatePosition(0, 0);
+                this.resizeHeight(400);
+                this.resizeWidth(window.innerWidth);
+                break;
+            default:
+                this.dock("right");
+                break;
+            }
+        }
+        this.config.docked = newDocked;
+    },
+
+    dockLeft: function () {
+        this.dock("left");
+    },
+
+    dockTop: function () {
+        this.dock("top");
+    },
+
+    dockRight: function () {
+        this.dock("right");
+    },
+
+    show: function () {
+        this.dom["window"].style.setProperty("display", "block");
+        if (!this.dom["list"].style.height) {
+            this.resizeHeight(this.dom["window"].offsetHeight);
+        }
+    },
+
     close: function () {
-        this.window.style.setProperty("display", "none");
+        this.dom["window"].style.setProperty("display", "none");
     }
 }
