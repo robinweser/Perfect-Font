@@ -292,6 +292,9 @@ var perfectfont = {
     },
 
     searchAvailableFont: function (e, font) {
+        if (font == "") {
+            font = "hopeThereWillNeverBeAFontWithThisNameDamn";
+        }
         var filterDomElements = this.dom["available"].childNodes;
         for (var i = 0; i < filterDomElements.length; ++i) {
             if (filterDomElements[i].innerHTML.toLowerCase().indexOf(font.toLowerCase()) != -1) {
