@@ -26,11 +26,11 @@
 
 #perfectfont-header {
     width: 100%;
-    padding: 11px 8px 11px 11px;
+    padding: 9px 8px;
     font-size: 17px;
     text-align: center;
     box-sizing: border-box;
-    background: rgb(232, 232, 232);
+    background: rgb(226, 226, 226);
     border-radius: 6px 6px 0px 0px;
     color: #3c3c3c;
     border-bottom: 1px solid #b7b7b7;
@@ -44,6 +44,58 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+#perfectfont-header span {
+    width: 10px;
+    margin: 4px 2px;
+    border-radius: 50%;
+    cursor: default;
+    height: 10px;
+}
+
+#perfectfont-close,
+#perfectfont-min,
+#perfectfont-max {
+    float: left;
+}
+
+#perfectfont-dock-left,
+#perfectfont-dock-top,
+#perfectfont-dock-right {
+    float: right;
+    background-color: rgb(95, 95, 95);
+    border: 1px solid rgb(59, 59, 59);
+}
+
+#perfectfont-close {
+    background-color: rgb(252, 89, 89);
+    border: 1px solid rgb(188, 55, 55);
+}
+
+#perfectfont-close:hover {
+    background-color: rgb(214, 69, 69);
+    border: 1px solid rgb(175, 47, 47);
+}
+
+#perfectfont-min {
+    background-color: rgb(254, 190, 48);
+    border: 1px solid rgb(198, 142, 17);
+}
+
+#perfectfont-min:hover {
+    background-color: rgb(222, 165, 38);
+    border: 1px solid rgb(186, 134, 19);
+}
+
+#perfectfont-max {
+    background-color: rgb(54, 205, 64);
+    border: 1px solid rgb(27, 142, 35);
+}
+
+#perfectfont-max:hover {
+    background-color: rgb(39, 157, 47);
+    border: 1px solid rgb(20, 124, 27);
+}
+
 #perfectfont-list {
     width: 22.5%;
     height: 100%;
@@ -55,17 +107,15 @@
     border-radius: 0px 0px 0px 6px;
     overflow-x: hidden;
     overflow-y: auto;
-    white-space: nowrap;
-    background: rgba(99, 168, 151, 0.5);
+    background: rgb(246, 246, 246);
     vertical-align: top;
+    box-shadow: inset -1px 0px #bcbcbc;
 }
 
 #perfectfont-list li {
     list-style-type: none;
-    padding: 7px 10px 9px 10px;
-    background: rgba(94, 160, 145, 0.94);
-    border-bottom: 1px solid rgba(198, 198, 198, 0.6);
-    color: white;
+    padding: 11px 5px 11px 0px;
+    color: #c1c1c1;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -73,16 +123,45 @@
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
 }
 
+#perfectfont-list li p {
+    padding-left: 6px;
+}
 #perfectfont-list li span {
-    color: #e8e8e8;
     font-size: 11px;
     display: block;
+    padding: 0px 7px 0px 3px;
+    display: inline-block;
+    color: #c7c7c7;
+    border-radius: 0px 20px 20px 0px;
+    border-style: solid;
+    border-color: #d6d6d6;
+    border-width: 1px 1px 1px 0px;
+}
+
+#perfectfont-list li.perfectfont-selected span {
+    color: #626262;
+            background-color: rgba(229, 229, 229, 0.81);
+        border-style: solid;
+    border-color: rgb(181, 181, 181);
+    border-width: 1px 1px 1px 0px;
 }
 
 #perfectfont-list li.perfectfont-selected {
-    background: rgb(48, 118, 101);
+    background: rgb(255, 255, 255);
+    border-top: 1px solid #bcbcbc;
+    border-bottom: 1px solid #bcbcbc;
+    color: #505050;
+}
+
+#perfectfont-list li:first-child.perfectfont-selected {
+    border-top: 1px solid transparent;
 }
 
 #perfectfont-detail {
@@ -95,20 +174,59 @@
     background: rgba(255, 255, 255, 1);
 }
 
-#perfectfont-available {
+#perfectfont-available-container {
     width: 37.5%;
+    display: inline-block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    vertical-align: top;
+    border-right: 1px solid rgb(203, 203, 203);
+    box-sizing: border-box;
+}
+
+#perfectfont-available-container div {
+    width: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+    background: white;
+    border-bottom: 1px solid rgb(203, 203, 203);
+    padding: 4px 5px;
+}
+
+#perfectfont-available-container span {
+    padding: 5px 8px;
+    font-size: 12px;
+    border-radius: 20px;
+    margin: 0 2px;
+    background: #f7f7f7;
+    border: 1px solid #b9b9b9;
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#perfectfont-available-container span.active {
+    background-color: rgba(80, 141, 84, 0.81);
+    border: 1px solid rgba(64, 116, 67, 0.87);
+    color: white;
+}
+
+#perfectfont-available {
+    width: 100%;
     height: auto;
     overflow-y: auto;
     display: inline-block;
-    vertical-align: top;
     outline-width: 0;
     outline: none;
     border: 0;
     padding: 5px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-weight: 300;
-    border-right: 1px solid rgb(203, 203, 203);
     font-size: 15px;
+}
+
+#perfectfont-available::-webkit-scrollbar,
+#perfectfont-available-container div::-webkit-scrollbar {
+    display: none
 }
 
 #perfectfont-preference {
@@ -121,21 +239,23 @@
 .perfectfont-styletool {
     width: 20%;
     padding: 10px;
+    text-align: center;
     box-sizing: border-box;
     display: inline-block;
     border-left: 1px solid rgba(190, 190, 190, 0.67);
     border-bottom: 1px solid rgba(190, 190, 190, 0.67);
 }
-.perfectfont-styletool:first-child{
-    border-left: none;
+
+.perfectfont-styletool:first-of-type {
+    border-left: 0;
 }
 
 #perfectfont-preference li {
-    padding: 7px 10px 9px 10px;
+    padding: 8px 10px 9px 10px;
     border-bottom: 1px solid rgba(196, 196, 196, 0.85);
     border-right: 1px solid rgba(196, 196, 196, 0.85);
     margin: 0;
-    background: rgba(0, 0, 0, 0.045);
+    background: rgb(246, 246, 246);
     list-style-type: none;
     font-size: 15px;
     display: block;
@@ -158,7 +278,7 @@
     width: 100%;
     box-sizing: border-box;
     display: block;
-    padding: 7px 10px 9px 10px;
+    padding: 8px 10px 9px 10px;
     border-width: 0px 0px 1px 0px;
     border-style: solid;
     background: rgba(255, 255, 255, 0.3);
@@ -172,7 +292,7 @@
 }
 
 #perfectfont-value input[type=color] {
-    /*padding: 0px 1px 0px 1px;*/
+    padding: 1px 3px 1px 3px;
 }
 
 #perfectfont-value input:hover {
@@ -186,5 +306,6 @@
 #perfectfont-available option {
     outline-width: 0;
     outline: none;
+    line-height: 18px;
     font-weight: 400;
 }
