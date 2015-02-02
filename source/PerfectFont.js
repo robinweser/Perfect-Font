@@ -76,8 +76,6 @@ var perfectfont = {
     },
 
     initDom: function (preference) {
-
-
         if (preference) {
             valueIds.forEach(function (item) {
                 perfectfont.dom[item] = document.getElementById(preId + item);
@@ -145,30 +143,29 @@ var perfectfont = {
                 this.usedFonts[alreadyCheckedFontStringsIndex].addDomElement(tempItem);
             } else {
                 alreadyCheckedFontStrings.push(tempFontString);
-                var tempSplitFontString = tempFontString.split(",");
-                for (var j in tempSplitFontString) {
-                    if (this.isAvailableFont(tempSplitFontString[j])) {
-                        tempFontString = tempSplitFontString[j].replace(/'/g, "");
-                        break;
-                    }
-                }
+                var tempFontString = this.getRenderedFont(tempFontString);
                 alreadyCheckedFontStringsUsedFonts.push(tempFontString);
-                var tempFontDetails = {
-                    fontWeight: (this.getStyleProperty(tempItem, "font-weight") == "normal" ? 400 : this.getStyleProperty(tempItem, "font-weight")),
-                    fontSize: this.getStyleProperty(tempItem, "font-size"),
-                    letterSpacing: (this.getStyleProperty(tempItem, "letter-spacing") == "normal" ? 0 : this.getStyleProperty(tempItem, "font-weight")),
-                    wordSpacing: this.getStyleProperty(tempItem, "word-spacing"),
-                    lineHeight: this.getStyleProperty(tempItem, "line-height"),
-                    color: this.getStyleProperty(tempItem, "color"),
-                    fontStyle: this.getStyleProperty(tempItem, "font-style"),
-                    fontVariant: this.getStyleProperty(tempItem, "font-variant")
-                }
+                var tempFontDetails = this.generateFontDetails(tempItem);
                 var tempUsedFont = new UsedFont();
                 tempUsedFont.init((alreadyCheckedFontStringsUsedFonts.length - 1), tempFontString, tempFontDetails);
                 this.usedFonts.push(tempUsedFont);
                 this.usedFonts[(alreadyCheckedFontStringsUsedFonts.length - 1)].addDomElement(tempItem);
             }
         }
+    },
+
+    generateFontDetails: function (tempItem) {
+        var fontDetails = {
+            fontWeight: (this.getStyleProperty(tempItem, "font-weight") == "normal" ? 400 : this.getStyleProperty(tempItem, "font-weight")),
+            fontSize: this.getStyleProperty(tempItem, "font-size"),
+            letterSpacing: (this.getStyleProperty(tempItem, "letter-spacing") == "normal" ? 0 : this.getStyleProperty(tempItem, "font-weight")),
+            wordSpacing: this.getStyleProperty(tempItem, "word-spacing"),
+            lineHeight: this.getStyleProperty(tempItem, "line-height"),
+            color: this.getStyleProperty(tempItem, "color"),
+            fontStyle: this.getStyleProperty(tempItem, "font-style"),
+            fontVariant: this.getStyleProperty(tempItem, "font-variant")
+        }
+        return fontDetails;
     },
 
     enableDragDrop: function () {
@@ -231,18 +228,10 @@ var perfectfont = {
             tempItem.appendChild(content);
             var htmlContent = tempItem.innerHTML;
             range.insertNode(tempItem);
-            var tempFontDetails = {
-                fontWeight: (this.getStyleProperty(tempItem, "font-weight") == "normal" ? 400 : this.getStyleProperty(tempItem, "font-weight")),
-                fontSize: this.getStyleProperty(tempItem, "font-size"),
-                letterSpacing: (this.getStyleProperty(tempItem, "letter-spacing") == "normal" ? 0 : this.getStyleProperty(tempItem, "font-weight")),
-                wordSpacing: this.getStyleProperty(tempItem, "word-spacing"),
-                lineHeight: this.getStyleProperty(tempItem, "line-height"),
-                color: this.getStyleProperty(tempItem, "color"),
-                fontStyle: this.getStyleProperty(tempItem, "font-style"),
-                fontVariant: this.getStyleProperty(tempItem, "font-variant")
-            }
+            var tempFontDetails = this.generateFontDetails(tempItem);
             var selectionUsedFont = new UsedFont();
-            selectionUsedFont.init(tempItem.id, this.getStyleProperty(tempItem, "font-family"), tempFontDetails);
+            var renderedFont = perfectfont.getRenderedFont(this.getStyleProperty(tempItem, "font-family"));
+            selectionUsedFont.init(tempItem.id, renderedFont, tempFontDetails);
             selectionUsedFont.addDomElement(tempItem);
             this.selectionUsedFonts.push(selectionUsedFont);
             this.addFontToList(selectionUsedFont, true);
@@ -394,6 +383,17 @@ var perfectfont = {
 
     isAvailableFont: function (fontName) {
         return checkfont(fontName);
+    },
+
+    getRenderedFont: function (fontString) {
+        var tempSplitFontString = fontString.split(",");
+        for (var j in tempSplitFontString) {
+            if (this.isAvailableFont(tempSplitFontString[j])) {
+                fontString = tempSplitFontString[j].replace(/'/g, "");
+                break;
+            }
+        }
+        return fontString.replace(/'/g, "");
     },
 
     updateUsedFont: function (clickedElement) {
