@@ -108,7 +108,7 @@
     background: rgb(255, 255, 255);
 }
 
-#perfectfont-split-size {
+#perfectfont-toggle-transparency {
     padding: 9px;
     display: inline-block;
     font-size: 14px;
@@ -116,10 +116,6 @@
     border-bottom: 1px solid rgb(203, 203, 203);
     border-right: 1px solid rgb(203, 203, 203);
     width: 100%;
-}
-
-#perfectfont-split-size input {
-    vertical-align: 1px;
 }
 
 #perfectfont-selection-container {
