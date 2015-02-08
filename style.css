@@ -207,6 +207,7 @@ footer {
     }
     header h1 {
         font-size: 75px;
+        line-height: 90px;
     }
     header p {
         padding: 0 20px;
