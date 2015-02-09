@@ -33,7 +33,6 @@ For detailed information on browser issues visit [Browser Issues](https://github
 * Chrome (tested with latest version)
 * Safari
 * Firefox
-* IE
      
 ## Change Log ##
 #### Last Changes (1.1.0) ####
@@ -50,24 +49,6 @@ Visit [Change Log](https://github.com/rofrischmann/perfectfont/blob/development/
 * style, decoration, transform testing (bold, italic, uppercase, lowercase, underline, ...)
 * support for Internet Explorer
 
-### Configuration ###
-```javascript
-config = {    
-    draggable: true,
-    maximized: false,
-    docked: false,
-    transparent: false
-}
-```
-
-### Adding new fonts ###
-```javascript
-fontWindow.addAvailableFont("Arial");
-fontWindow.addAvailableFont("Lato");
-fontWindow.addAvailableFont("Helvetica");
-fontWindow.addAvailableFont("Impact");
-```
-
 
 ## Custom Build ##
 perfectfont is build with [Grunt](http://gruntjs.com/). Just clone the source and install all dependecies.   
@@ -83,7 +64,10 @@ grunt
 creates both minified and concated files within inside `path/to/perfectont/bin`.   
 
 
-## Contact Me ##
+## License
+Calculate.js is licensed under the MIT license. (http://opensource.org/licenses/MIT)
 
-Feel free to contact me ([robin@rofrischmann.de](mailto:robin@rofrischmann.de)).
+## Contributing
+If you've got something useful just create a pull request or let me know and I'll add it.   
+Created by [Robin Frischmann](http://rofrischmann.de).
  
