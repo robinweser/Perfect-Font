@@ -5,7 +5,7 @@ var preId = "perfectfont-";
 var mouseX, mouseY, lDivX, lDivY;
 var move = false;
 
-var domElements = ["window", "header", "list-container", "list", "detail", "selection-container", "toggle-transparency", "search-container", "available-container", "available", "preference", "value"];
+var domElements = ["window", "header", "list-container", "list", "detail", "toggle-transparency","selection", "search-container", "available-container", "available", "preference", "value"];
 var preferenceNames = ["Size", "Weight", 'Spacing <span class="perfectfont">(Letter)</span>', 'Spacing <span class="perfectfont">(Word)</span>', 'Height <span class="perfectfont">(Line)</span>', "Color"];
 var valueTypes = ["number", "number", "number", "number", "number", "color"];
 var valueIds = ["fontSize", "fontWeight", "letterSpacing", "wordSpacing", "lineHeight", "color"];
@@ -55,12 +55,12 @@ var perfectfont = {
         document.body.appendChild(window);
         //header
         var windowTools = '<span id="perfectfont-close" onclick="perfectfont.close()"></span><span id="perfectfont-min" onclick="perfectfont.close()"></span><span id="perfectfont-max" onclick="perfectfont.maximize()"></span>';
-        var dockTools = '<span id="perfectfont-dock-right" onclick="perfectfont.dockRight()"></span><span id="perfectfont-dock-top" onclick="perfectfont.dockTop()"></span><span id="perfectfont-dock-left" onclick="perfectfont.dockLeft()"></span>';
+        //var dockTools = '<span id="perfectfont-dock-right" onclick="perfectfont.dockRight()"></span><span id="perfectfont-dock-top" onclick="perfectfont.dockTop()"></span><span id="perfectfont-dock-left" onclick="perfectfont.dockLeft()"></span>';
 
-        window.innerHTML += '<div id="' + preId + 'header">' + windowTools + title + dockTools + '</div>';
+        window.innerHTML += '<div id="' + preId + 'header">' + windowTools + title + /*dockTools +*/ '</div>';
 
         //body
-        window.innerHTML += '<div id="' + preId + 'list-container"><div id="' + preId + 'selection-container"><div id="' + preId + 'selection" onmousedown="perfectfont.addSelectionToList()">Add Selection</div></div><span id="' + preId + 'toggle-transparency"><input type="checkbox" onchange="perfectfont.toggleTransparency()"> Transparency</span><ul id="' + preId + 'list"></ul></div>';
+        window.innerHTML += '<div id="' + preId + 'list-container"><div id="' + preId + 'selection" onmousedown="perfectfont.addSelectionToList()">Add Selection</div><span id="' + preId + 'toggle-transparency" onclick="perfectfont.toggleTransparency()">Transparency</span><ul id="' + preId + 'list"></ul></div>';
         var groups = "";
         fontStyles.forEach(function (item) {
             if (perfectfont.config.fonts.googleWebFonts[item.replace("-s", "S")]) {
@@ -68,7 +68,7 @@ var perfectfont = {
             }
         });
         window.innerHTML += '<div id="' + preId + 'available-container"><div>' + groups + '</div><div id="' + preId + 'search-container"><input id="' + preId + 'search" placeholder="Search ..." onkeyup="perfectfont.searchAvailableFont(event, this.value)"></div><select id="' + preId + 'available" onchange="perfectfont.updateUsedFont(this)"></div>';
-        window.innerHTML += '<div id="' + preId + 'detail"><div id="' + preId + 'preference"></div><div id="' + preId + 'value"></div></div>';
+        window.innerHTML += '<div id="' + preId + 'detail"></div>';
 
         this.initDom();
         this.initDetails();
@@ -97,6 +97,9 @@ var perfectfont = {
     initDetails: function () {
         var preferenceList = "";
         var valueList = "";
+        this.dom["detail"].innerHTML += '<span class="perfectfont-styletool">B</span><span class="perfectfont-styletool">I</span>';
+        this.dom["detail"].innerHTML += '<span class="perfectfont-styletool">U</span><span class="perfectfont-styletool">aA</span><span class="perfectfont-styletool">u</span>';
+        this.dom["detail"].innerHTML += '<div id="' + preId + 'preference"></div><div id="' + preId + 'value"></div>';
         for (var i = 0; i < preferenceNames.length; ++i) {
             preferenceList += '<li class="perfectfont">' + preferenceNames[i] + '</li>';
             valueList += '<input id="' + preId + valueIds[i] + '" type="' + valueTypes[i] + '" onchange="perfectfont.updateUsedFontDetail(this)"';
@@ -105,13 +108,11 @@ var perfectfont = {
             }
             valueList += '>';
         }
-        this.dom["preference"].innerHTML = preferenceList;
-        this.dom["value"].innerHTML = valueList;
+        this.initDom();
+        this.dom["preference"].innerHTML += preferenceList;
+        this.dom["value"].innerHTML += valueList;
 
-        //TODO: Ausreifen
-        //this.dom["detail"].innerHTML += '<span class="perfectfont-styletool">B</span><span class="perfectfont-styletool">I</span>';
-        //this.dom["detail"].innerHTML += '<span class="perfectfont-styletool">U</span><span class="perfectfont-styletool">aA</span><span class="perfectfont-styletool">u</span>';
-        this.initDom(true);
+       this.initDom(true);
     },
 
 
@@ -207,9 +208,9 @@ var perfectfont = {
     addFontToList: function (usedFont, selection) {
         var newUsedFont;
         if (selection) {
-            newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this, true)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">#' + usedFont.id + '</p><span class="perfectfont">' + usedFont.originFontName + ' - ' + usedFont.fontDetails.fontSize + '</span></li>'
+            newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this, true)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">#' + usedFont.id + '</p><span class="perfectfont">' + usedFont.originFontName + '</span></li>'
         } else {
-            newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">' + usedFont.fontName + '</p><span class="perfectfont">' + usedFont.originFontName + ' - ' + usedFont.fontDetails.fontSize + '</span></li>'
+            newUsedFont = '<li id="' + preId + usedFont.id + '" onclick="perfectfont.showUsedFontPreferences(this)"><p class="perfectfont" style="font-family:' + usedFont.fontName + '">' + usedFont.fontName + '</p><span class="perfectfont">' + usedFont.originFontName + '</span></li>'
         }
         this.dom["list"].innerHTML += newUsedFont;
         this.dom["list"].childNodes[this.dom["list"].childNodes.length - 1].click();
@@ -365,11 +366,14 @@ var perfectfont = {
                 };
                 for (var i = 0; i < googleWebFontsJSON.items.length; ++i) {
                     var temp = googleWebFontsJSON.items[i];
-                    var variants = temp.variants[0];
-                    for (var j = 1; j < temp.variants.length; ++j) {
-                        variants += temp.variants[j];
+                    var variants ="";
+                    for (var j = 0; j < temp.variants.length; ++j) {
+                        if (temp.variants[j] == "italic") {
+                            temp.variants[j] = "400italic";
+                        }
+                        variants += temp.variants[j].replace("regular", "400") + ",";
                     }
-                    googleFonts[temp.category][temp.family] = variants;
+                    googleFonts[temp.category][temp.family] = variants.substr(0, variants.length - 1);
                 }
                 callback(googleFonts);
             }
@@ -408,7 +412,7 @@ var perfectfont = {
     resizeHeight: function (newHeight) {
         var newInnerHeight = newHeight - this.dom["header"].offsetHeight;
         var availableInnerHeight = (newInnerHeight - this.dom["available-container"].childNodes[0].offsetHeight - this.dom["search-container"].offsetHeight);
-        var listInnerHeight = (newInnerHeight - this.dom["selection-container"].offsetHeight - this.dom["toggle-transparency"].offsetHeight);
+        var listInnerHeight = (newInnerHeight - this.dom["selection"].offsetHeight - this.dom["toggle-transparency"].offsetHeight);
         this.dom["window"].style.setProperty("height", newHeight + "px");
         this.dom["list-container"].style.setProperty("height", (listInnerHeight - 2) + "px");
         this.dom["detail"].style.setProperty("height", (newInnerHeight - 2) + "px");
