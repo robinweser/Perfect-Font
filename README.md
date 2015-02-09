@@ -3,15 +3,37 @@
 
 **perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
 
-## Abilities ##
-* lists all fonts used on a webpage
-* realtime testing of different fonts and font details e.g. size, weight, word-spacing, letter-spacing, color
-* draggable window with dock, maximize and transparency functionality
+## Usage ##
+Get your latest version from [Here](https://github.com/rofrischmann/perfectfont/releases).   
+I recommend using Chrome since it supports all input types. Safari/Firefox work too but may not support every feature.   
+Then add it within your ``<head></head>``
+```html
+<script src="perfectfont.min.js"></script>
+```   
+   
+Now open your developer tools and execute `perfectfont.show()` within your console.    
+You may add new Fonts by just executing `addAvailableFont` e.g. `perfectfont.addAvailableFont("Arial")`.    
+But please take in mind that you need to have the specified font installed.    
     
+
+## Abilities ##
+* Easy to **use/install**
+* **Initializes** all fonts used within a scope &amp; **lists** them for individual editing
+* **Realtime testing** font **details** as easy as with your prefered word processor
+* **650+** fonts thanks to **google web fonts**
+* **Import local** fonts
+* Ability to test only **selected** text
+* direkt **CSS snippet**
+* **Filter** & **Search** with direct output
+* **Dock**, **Maximize**, **Minimize** &amp; **Transparency** Mode
+* Dragable Window mode
+  
 ## Browser Support ##
+For detailed information on browser issues visit [Browser Issues](https://github.com/rofrischmann/perfectfont/blob/development/BrowserIssues.md);
 * Chrome (tested with latest version)
 * Safari
 * Firefox
+* IE
      
 ## Change Log ##
 #### Last Changes (1.1.0) ####
@@ -27,19 +49,6 @@ Visit [Change Log](https://github.com/rofrischmann/perfectfont/blob/development/
 * form to add custom fonts (drag & drop as well)
 * style, decoration, transform testing (bold, italic, uppercase, lowercase, underline, ...)
 * support for Internet Explorer
-
-## How to use ##
-Download the latest version [Here](https://github.com/rofrischmann/perfectfont/releases).   
-I recommend using Chrome because it got a nice color picker to go with. 
-```html
-<script type="text/javascript" src="perfectfont.min.js"></script>
-<link type="text/css" href="perfectfont.min.css" rel="stylesheet">
-``` 
-   
-```javascript
-var fontWindow = new PerfectFont(config);      //Don't need to pass a config
-fontWindow.show()
-```
 
 ### Configuration ###
 ```javascript
