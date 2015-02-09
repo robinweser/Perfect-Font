@@ -11,7 +11,10 @@ Then add it within your ``<head></head>``
 <script src="perfectfont.min.js"></script>
 ```   
    
-Now open your developer tools and execute `perfectfont.show()` within your console.    
+Now open your developer tools and execute this within your console
+```javascript
+perfectfont.show()
+```  
 You may add new Fonts by just executing `addAvailableFont` e.g. `perfectfont.addAvailableFont("Arial")`.    
 But please take in mind that you need to have the specified font installed.    
     
