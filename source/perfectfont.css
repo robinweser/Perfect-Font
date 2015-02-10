@@ -7,7 +7,7 @@
 }
 
 #perfectfont-window {
-    width: 600px;
+    width: 560px;
     height: 400px;
     font-size: 16px;
     left: 300px;
@@ -16,24 +16,24 @@
     position: fixed;
     z-index: 999999;
     background: rgba(237, 237, 237, 0.75);
-    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 0px 3px rgba(69, 69, 69, 0.72), 0px 0px 40px rgba(69, 69, 69, 0.32);
     box-sizing: border-box;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-weight: 300;
     display: none;
-    border: 1px solid rgba(183, 183, 183, 0.85);
+    border: 0px solid rgba(183, 183, 183, 0.55);
 }
 
 #perfectfont-header {
     width: 100%;
-    padding: 9px 8px;
+    padding: 9px 9px;
     font-size: 17px;
     text-align: center;
     box-sizing: border-box;
-    background: rgb(226, 226, 226);
+    background: rgb(246, 246, 246);
     border-radius: 6px 6px 0px 0px;
-    color: rgb(226, 226, 226);
-    border-bottom: 1px solid #b7b7b7;
+    color: rgb(246, 246, 246);
+    border-bottom: 1px solid rgb(202, 202, 202);
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -41,16 +41,15 @@
     cursor: move;
     -ms-user-select: none;
     user-select: none;
-    font-family: 'Arial';
     font-weight: 400;
 }
 
 #perfectfont-header span {
-    width: 10px;
-    margin: 4px 2px;
+    width: 11px;
+    margin: 4px 3px;
     border-radius: 50%;
     cursor: default;
-    height: 10px;
+    height: 11px;
 }
 
 #perfectfont-close,
@@ -69,7 +68,7 @@
 
 #perfectfont-close {
     background-color: rgb(252, 89, 89);
-    border: 1px solid rgb(191, 77, 77);
+    border: 1px solid rgba(191, 77, 77, 0.3);
 }
 
 #perfectfont-close:hover {
@@ -79,7 +78,7 @@
 
 #perfectfont-min {
     background-color: rgb(254, 190, 48);
-    border: 1px solid rgb(209, 159, 47);
+    border: 1px solid rgba(209, 159, 47, 0.3);
 }
 
 #perfectfont-min:hover {
@@ -89,7 +88,7 @@
 
 #perfectfont-max {
     background-color: rgb(54, 205, 64);
-    border: 1px solid rgb(41, 160, 49);
+    border: 1px solid rgba(41, 160, 49, 0.3);
 }
 
 #perfectfont-max:hover {
@@ -109,7 +108,9 @@
     background: rgb(255, 255, 255);
 }
 
-#perfectfont-toggle-transparency {
+#perfectfont-toggle-transparency,
+#perfectfont-selection,
+#perfectfont-element {
     padding: 9px;
     display: inline-block;
     font-size: 14px;
@@ -120,28 +121,14 @@
     border-right: 1px solid rgb(203, 203, 203);
     width: 100%;
     text-align: center;
-}
-
-#perfectfont-toggle-transparency:hover {
     background: #eaeaea;
-    cursor: pointer;
 }
 
-#perfectfont-selection {
-    width: 100%;
-    padding: 9px 0;
-    box-sizing: border-box;
-    font-size: 14px;
-    text-align: center;
+#perfectfont-toggle-transparency:hover,
+#perfectfont-selection:hover,
+#perfectfont-element:hover {
+    background: #fff;
     cursor: pointer;
-    border-bottom: 1px solid rgb(203, 203, 203);
-    border-right: 1px solid rgb(95, 95, 95);
-    background: #626262;
-    color: white;
-}
-
-#perfectfont-selection:hover {
-    background: #3c3c3c;
 }
 
 #perfectfont-list {
@@ -303,15 +290,22 @@
 
 .perfectfont-styletool {
     width: 20%;
-    padding: 8px;
+    padding: 8px 8px 9px;
     text-align: center;
     box-sizing: border-box;
     display: inline-block;
     border-left: 1px solid rgba(190, 190, 190, 0.67);
     border-bottom: 1px solid rgba(190, 190, 190, 0.67);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #eaeaea;
 }
 
-.perfectfont-styletool:first-of-type {
+.perfectfont-styletool:hover {
+    background: #fff;
+}
+
+.perfectfont-styletool:first-of-type,
+.perfectfont-styletool:nth-child(6) {
     border-left: 0;
 }
 
