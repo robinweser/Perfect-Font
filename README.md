@@ -1,7 +1,7 @@
 
-# perfectfont #
+# Perfect Font #
 
-**perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
+**Perfect Font** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
 
 ## Usage ##
 Get your latest version from [Here](https://github.com/rofrischmann/perfectfont/releases).   
@@ -68,7 +68,7 @@ creates both minified and concated files within inside `path/to/perfectont/bin`.
 
 
 ## License
-Calculate.js is licensed under the MIT license. (http://opensource.org/licenses/MIT)
+Perfect Font is licensed under the MIT license. (http://opensource.org/licenses/MIT)
 
 ## Contributing
 If you've got something useful just create a pull request or let me know and I'll add it.   
