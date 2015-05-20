@@ -1,18 +1,20 @@
 
-# perfectfont #
+# Perfect Font #
 
-**perfectfont** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
+**Perfect Font** is an **easy-to-use, realtime fast forward in-browser** overlayer window that helps you to find the best fonts / typography for your webpage.
 
 ## Usage ##
-Get your latest version from [Here](https://github.com/rofrischmann/perfectfont/releases).   
+Get your latest version from [Here](https://github.com/unverschaemt/Perfect-Font/releases).   
 I recommend using Chrome since it supports all input types. Safari/Firefox work too but may not support every feature.   
 Then add it within your ``<head></head>``
 ```html
 <script src="perfectfont.min.js"></script>
+<link rel="stylesheet" href="perfectfont.min.css">
 ```   
    
 Now open your developer tools and execute this within your console
 ```javascript
+perfectfont.init()
 perfectfont.show()
 ```  
 You may add new Fonts by just executing `addAvailableFont` e.g. `perfectfont.addAvailableFont("Arial")`.    
@@ -32,7 +34,7 @@ But please take in mind that you need to have the specified font installed.
 * Dragable Window mode
   
 ## Browser Support ##
-For detailed information on browser issues visit [Browser Issues](https://github.com/rofrischmann/perfectfont/blob/development/BrowserIssues.md);
+For detailed information on browser issues visit [Browser Issues](https://github.com/unverschaemt/Perfect-Font/blob/development/BrowserIssues.md);
 * Chrome (tested with latest version)
 * Safari
 * Firefox
@@ -42,7 +44,7 @@ For detailed information on browser issues visit [Browser Issues](https://github
 * menu buttons to minimize, maximize, close, dock left/top/right and toggle transparency
 * added firefox support
      
-Visit [Change Log](https://github.com/rofrischmann/perfectfont/blob/development/Changelog.md) for whole change history.   
+Visit [Change Log](https://github.com/unverschaemt/Perfect-Font/blob/development/Changelog.md) for whole change history.   
  
 ## Coming soon ##
 * export the outcome as a CSS-file (with old fonts in comments above)
@@ -68,9 +70,9 @@ creates both minified and concated files within inside `path/to/perfectont/bin`.
 
 
 ## License
-Calculate.js is licensed under the MIT license. (http://opensource.org/licenses/MIT)
+Perfect Font is licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
 ## Contributing
 If you've got something useful just create a pull request or let me know and I'll add it.   
-Created by [Robin Frischmann](http://rofrischmann.de).
+Copyright 2015 by [@rorischmann](http://rofrischmann.de) at [Unverschämt.](http://unverschaemt.net)
  
